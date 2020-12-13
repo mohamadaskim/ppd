@@ -6,7 +6,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <base href = "https://ppdkluang.edu.my" />
+    <base href = "" />
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/cosmo/bootstrap.min.css" integrity="sha256-B2v3WDCH+olIjKaUMBXAZdwu1SYlEKs7eqroRv14atA=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="cpanel/css/styles.css?v=1.7">
+    <link rel="stylesheet" href="/ppdkluang/cpanel/css/styles.css?v=1.7">
     <title>Panel Pengurusan Sekolah Portal PPD Kluang</title>
   </head>
   <body>
