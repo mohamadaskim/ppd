@@ -1,0 +1,9 @@
+body{
+    line-height: 1.5;
+    font-size: 11pt;
+    color: #373a3c;
+    font-family: "Segoe UI", "Source Sans Pro", Calibri, Candara, Arial, sans-serif;
+}
+p,ul,ol{
+    margin: 0;
+}

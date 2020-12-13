@@ -1,0 +1,64 @@
+@page {
+    size: A4;
+}
+html{
+    font-size: 12px;
+}
+h1,h2,h3,h4,h5,h6{
+    margin:0;
+}
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+}
+.border{
+    height: 500px;
+    position: relative;
+    flex-basis: 50%;
+    padding:20px;
+}
+.wrapper{
+    border: solid 1.5px black;
+}
+.border-body{
+    padding: 15px;
+    font-size: .8rem;
+    height:420px;
+    overflow: hidden;
+}
+.top{
+    display: flex;
+    padding: 10px;
+}
+.top-left{
+    flex-shrink:0;
+    width: 30%;
+}
+.top-left img{
+    width: 100%;
+}
+.top-right{
+    text-align: center;
+    margin-left:5px;
+}
+.maklumat{
+    width:100%;
+    font-size: 1rem;
+}
+.maklumat ul{
+    padding-inline-start: 15px;
+    margin:0;
+}
+.maklumat td{
+    padding-bottom: 5px;
+    vertical-align: top;
+}
+.bottom{
+    font-size: .8rem;
+    text-align: center;
+    padding: 5px;
+    background: black;
+    color: white;
+    width:100%;
+    line-height: 1rem;
+}

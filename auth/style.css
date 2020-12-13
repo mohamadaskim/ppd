@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+html{
+    height: 100%;
+}
+body{
+    margin: 0;
+    font-size: 14px;
+    height: 100%;
+    background-image: url("img/background.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+}
+
+.kad{
+    width: 30%;
+    background: #800080;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #ffc0cb, #800080);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #ffc0cb, #800080); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border-radius: 5px;
+    padding: 20px;
+}
+.kad img{
+    width: 100%;
+}
+.tengah{
+    text-align: center;
+}
+.inputbox{
+    color: white;
+    margin-top: 20px;
+}
+.shadow{
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.button.button-primary, button.button-primary, input[type=button].button-primary, input[type=reset].button-primary, input[type=submit].button-primary {
+    color: #39375b;
+    background-color: #f9f9f9;
+    border-color: #f9f9f9;
+    transition: background-color .5s, color .5s;
+}
+.button.button-primary:focus, .button.button-primary:hover, button.button-primary:focus, button.button-primary:hover, input[type=button].button-primary:focus, input[type=button].button-primary:hover, input[type=reset].button-primary:focus, input[type=reset].button-primary:hover, input[type=submit].button-primary:focus, input[type=submit].button-primary:hover {
+    color: #FFF;
+    background-color: #1EAEDB;
+    border-color: #1EAEDB;
+}
+.butang{
+    margin: 20px 0;
+}
+.check{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nomargin{
+    margin: 0;
+}
+.scaleup{
+    transform: scale(1.5);
+}
+.myradius-button{
+    border-radius: 20px;
+}
+.wrapper-logo{
+    padding: 10px;
+    background: #f9f9f9;
+    width: 40%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo-main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media only screen and (max-width: 800px) {
+    .kad {
+        width: 60%;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .kad {
+        width: 90%;
+    }
+}
