@@ -168,7 +168,7 @@
                 ]
             }, {
                 label: 'KESELAMATAN',
-                backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+                backgroundColor: color(window.chartColors.yellow).alpha(0.5).rgbString(),
                 borderColor: window.chartColors.blue,
                 borderWidth: 1,
                 data: [

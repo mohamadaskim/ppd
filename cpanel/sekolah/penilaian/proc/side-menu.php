@@ -7,7 +7,7 @@ $sect = $kuri->fetchAll(PDO::FETCH_COLUMN);
     <div class="list-group list-group-flush inbox-menu">
         <a href="https://localhos/ppdkluang/cpanel/sekolah/inbox" class="list-group-item list-group-item-action <?= ($view=='primary'?'active-oren':'') ?>">
             <i class="fa fa-envelope" aria-hidden="true"></i>
-            <span>DASHBOARD <?= ($xbaca?'&ensp;<span class="badge badge-secondary rounded">'.$xbaca.'</span></span>':'') ?>
+            <span>DASHBOARD </span>
         </a>
         <a href="https://localhos/ppdkluang/cpanel/sekolah/inbox/?view=telahbaca" class="list-group-item list-group-item-action <?= ($view=='telahbaca'?'active-oren':'') ?>">
             <i class="fa fa-envelope-open" aria-hidden="true"></i> TAMBAH PENILAIAN
