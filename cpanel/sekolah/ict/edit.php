@@ -2,59 +2,22 @@
     $page = 'inbox';
     include($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/sekolah/header.php");
 
-    if(isset($_GET['view'])){
-        $view = htmlspecialchars($_GET['view']);
-    } else {
-        $view = 'primary';
+
+    if(!isset($_GET['id'])){
+        header('Location: senarai.php');
+        exit();
     }
 
-    if(isset($_GET['tahun'])){
-        $tahunq = htmlspecialchars($_GET['tahun']);
-    } else {
-        $tahunq = date('Y');
-    }
+    $id = htmlspecialchars($_GET['id']);
 
-    if(isset($_GET['page'])){
-        $page = htmlspecialchars($_GET['page']);
-        $offset = (htmlspecialchars($_GET['page'])*20)-20;
-    } else {
-        $offset = 0;
-        $page = 1;
-    }
+    $kuri = $PPD->prepare("SELECT * FROM sts2020 WHERE id = ? LIMIT 1");
+    $kuri->execute([$id]);
+ $d = $kuri->fetch(PDO::FETCH_ASSOC);
 
-    $sektor = '%%';
-    $pegawai = '%%';
-    $tahun = '%'.$tahunq.'%';
-    $edaran = '%%';
-    $keyword = '%%';
+    $kuri = $PPD->query("SELECT kategori,kategori FROM sts2020 group by kategori");
+    $keny = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
+
     
-    if($view=='primary'){
-        $baca = '=';
-    } else if($view=='telahbaca') {
-        $baca = '<>';
-    } else if($view=='search') {
-        $sektor = ($_GET['sektor']=='all'?'%%':'%'.$_GET['sektor'].'%');
-        $pegawai = ($_GET['pegawai']==''?'%%':'%'.$_GET['pegawai'].'%');
-        $tahun = ($_GET['tahun']=='all'?'%%':'%'.$_GET['tahun'].'%');
-        $keyword = ($_GET['keyword']==''?'%%':'%'.$_GET['keyword'].'%');
-    } else if($view=='edaran') {
-        $edaran = '%'.$_GET['edaran'].'%';
-        $tahun = '%%';
-    }
-
-    if($view=='primary'||$view=='telahbaca'){
-        include 'proc/query-normal.php';
-    } else if($view=='pkp') {
-        include 'proc/query-pkp.php';
-    } else {
-        include 'proc/query-search.php';
-    }
-    
-    $jumpage = ceil($kaun/20);
-
-    $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM sts2020 WHERE kodsekolah = ? ");
-    $kuri->execute([USER]);
-    $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
 ?>
 
 
@@ -85,48 +48,53 @@
 
                 <form class="card-body form-ada-proses" action="cpanel/egerak/proc/isi.php" method="POST">
                     <div class="form-group form-row">
-                        <div class="col-6">
-                            <label for="mula">MULA</label>
-                            <input type="mula" class="form-control" value="<?= $d['kodsekolah'] ?>" name="mula">
+                        <div class="col-4">
+                            <label for="mula">No Tiket STS</label>
+                            <input readonly type="mula" class="form-control" value="<?= $d['notiket'] ?>" name="mula">
+                        </div>
+                        <div class="col-2">
+                            <label for="mula">Tarikh Laporan</label>
+                            <input readonly type="mula" class="form-control" value="<?= $d['tarikh'] ?>" name="mula">
                         </div>
                         <div class="col-6">
-                            <label for="hingga">HINGGA</label>
-                            <input type="hingga" class="form-control" value="<?= myDate($d['enddate']) ?>" name="hingga">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="masa">MASA</label>
-                        <div>
-                            <?php foreach($masal as $m){ ?>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="<?= $m ?>" name="masa" class="custom-control-input" value="<?= $m ?>" <?= ($d['masa']==$m?'checked':'') ?> required>
-                                <label class="custom-control-label" for="<?= $m ?>"><?= ucwords($m) ?></label>
-                            </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="kat">KATEGORI</label>
-                        <select name="kat" id="kat" class="form-control">
+                            <label for="hingga">KATEGORI / JENIS PERALATAN</label>
+ <select disabled name="kat" id="kat" class="form-control">
                             <?php
                             foreach($keny as $k=>$v){
                                 echo'<option value="'.$k.'" '.($d['kategori']==$k?'selected':'').'>'.$v.'</option>';
                             }
                             ?>
                         </select>
+                        </div>
+                        <div class="col-12">
+                            <label for="mula">No KewPA / No Daftar Harta Modal</label>
+                            <input type="mula" class="form-control" value="<?= $d['kewpa'] ?>" name="mula">
+                        </div>
+                        <div class="col-4">
+                            <label for="hingga">TAHUN PEROLEHAN PERALATAN</label>
+                            <input type="hingga" class="form-control" value="<?= $d['tahunperolehan'] ?>" name="hingga">
+                        </div>
+                        <div class="col-8">
+                            <label for="hingga">LOKASI PERALATAN</label>
+                            <input type="hingga" class="form-control" value="<?= $d['lokasi'] ?>" name="hingga">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="tajuk">KETERANGAN KEROSAKAN</label>
+                        <textarea rows="4" class="form-control"><?= $d['kerosakkan'] ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="tajuk">PROGRAM/AKTIVITI</label>
-                        <input type="text" class="form-control" name="tajuk" value="<?= $d['title'] ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="lokasi">LOKASI</label>
-                        <input type="text" class="form-control" name="lokasi" value="<?= $d['location'] ?>">
+                        <label for="lokasi">KETERANGAN PERALATAN</label>
+                       <textarea rows="4" class="form-control"><?= $d['keterangan'] ?></textarea>
                     </div>
                     <div class="text-center">
                         <button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> KEMBALI</button>
                         <input type="hidden" name="id" value="<?= $id ?>">
-                        <button type="submit" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> KEMASKINI</button>
+  <a href=""  data-toggle="modal" data-target="#modalRegisterForm"><button  class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> SAHKAN PERALATAN</button></a>
+
+                        
                     </div>
                 </form>
                 
@@ -167,6 +135,44 @@
         })
     </script>
 
+
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">SAHKAN PERALATAN</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+
+          <label data-error="wrong" data-success="right" for="orangeForm-name">NAMA PEGAWAI PENGESAH</label>
+                    <input type="text" id="orangeForm-name" class="form-control validate">
+        </div>
+
+
+
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+
+          <label data-error="wrong" data-success="right" for="orangeForm-name">Saya mengesahakan <b>Peralatan Tersebut Ada</b> dan <b>Mempunyai KewPA/Daftar Harta Modal</b> adalah tepat dan benar</label>
+                    
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+
+        <button class="btn btn-success">SAHKAN</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
