@@ -11,6 +11,11 @@
 $kuri = $PPD->prepare("SELECT * FROM `sts_dapat` where kodsekolah=? ");
 $kuri->execute([USER]);
 $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
+
+
+    $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM sts2020 s left join sts_pengesah p on p.id_rekod=s.ID WHERE s.kodsekolah = ? and status = 0 and pegawai is null");
+    $kuri->execute([USER]);
+    $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
 ?>
 
 
@@ -38,6 +43,9 @@ $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
         <div class="col col-md order-first order-md-last">
+<h3 class="card mt-4 font-weight-bold p-2 text-center bg-danger text-light "><?= $xbaca; ?> UNIT <br>PERALATAN YANG BELUM DI SAHKAN UNTUK PERMOHONAN PEROLEHAN TAHUN 2021<br>SILA SEMAK SENARAI PERMOHONAN</h3>
+
+
  <h4 class="card mt-4 font-weight-bold p-2 text-center">SENARAI PEROLEHAN PENYELENGGARAAN SEKOLAH</h4>
 <table class="table table-striped my-lh-1 text-center mb-0">
             <thead class="bg-warning text-light">

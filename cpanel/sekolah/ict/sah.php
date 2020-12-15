@@ -1,11 +1,12 @@
 <?php
+
     $page = 'inbox';
     include($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/sekolah/header.php");
 
 
        
 
-        $view = '2';
+        $view = '3';
 
 
 
@@ -45,7 +46,7 @@
 
     if($view=='2'||$view=='telahbaca'){
         include 'proc/query-normal.php';
-    } else if($view=='padam') {
+    } else if($view=='3') {
         include 'proc/query-padam.php';
     } else {
         include 'proc/query-search.php';
@@ -53,7 +54,7 @@
     
     $jumpage = ceil($kaun/20);
 
-    $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM sts2020 WHERE kodsekolah = ? and status=0");
+    $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM sts2020 s left join sts_pengesah p on p.id_rekod=s.ID WHERE s.kodsekolah = ? and status = 0 and pegawai is null");
     $kuri->execute([USER]);
     $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
 ?>
@@ -125,13 +126,13 @@ $x++;
                         $f6 = (isset($_GET['tahun'])?'&tahun='.$_GET['tahun']:'');
 
                         if($jumpage>1){
-                            echo'<li class="page-item '.($page==1?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/senarai.php?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page=1"><i class="fa fa-fast-backward" aria-hidden="true"></i></a></li>';
-                            echo'<li class="page-item '.($page==1?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/senarai.php?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.($page-1).'"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li>';
+                            echo'<li class="page-item '.($page==1?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/sah.php?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page=1"><i class="fa fa-fast-backward" aria-hidden="true"></i></a></li>';
+                            echo'<li class="page-item '.($page==1?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/sah.php?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.($page-1).'"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li>';
                             for($p=1;$p<=$jumpage;$p++){
-                                echo'<li class="page-item '.($p==$page?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/senarai.php?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.$p.'">'.$p.'</a></li>';
+                                echo'<li class="page-item '.($p==$page?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/sah.php?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.$p.'">'.$p.'</a></li>';
                             }
-                            echo'<li class="page-item '.($page==$jumpage?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/senarai.php?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.($page+1).'"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li>';
-                            echo'<li class="page-item '.($page==$jumpage?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/senarai.php?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.$jumpage.'"><i class="fa fa-fast-forward" aria-hidden="true"></i></a></li>';
+                            echo'<li class="page-item '.($page==$jumpage?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/sah.php?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.($page+1).'"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li>';
+                            echo'<li class="page-item '.($page==$jumpage?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/sah.php?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.$jumpage.'"><i class="fa fa-fast-forward" aria-hidden="true"></i></a></li>';
                         }
                         ?>
                     </ul>
