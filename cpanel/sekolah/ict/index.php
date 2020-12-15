@@ -2,59 +2,15 @@
     $page = 'inbox';
     include($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/sekolah/header.php");
 
-    if(isset($_GET['view'])){
-        $view = htmlspecialchars($_GET['view']);
-    } else {
-        $view = 'primary';
-    }
 
-    if(isset($_GET['tahun'])){
-        $tahunq = htmlspecialchars($_GET['tahun']);
-    } else {
-        $tahunq = date('Y');
-    }
+   $view = '1';
 
-    if(isset($_GET['page'])){
-        $page = htmlspecialchars($_GET['page']);
-        $offset = (htmlspecialchars($_GET['page'])*20)-20;
-    } else {
-        $offset = 0;
-        $page = 1;
-    }
 
-    $sektor = '%%';
-    $pegawai = '%%';
-    $tahun = '%'.$tahunq.'%';
-    $edaran = '%%';
-    $keyword = '%%';
+
     
-    if($view=='primary'){
-        $baca = '=';
-    } else if($view=='telahbaca') {
-        $baca = '<>';
-    } else if($view=='search') {
-        $sektor = ($_GET['sektor']=='all'?'%%':'%'.$_GET['sektor'].'%');
-        $pegawai = ($_GET['pegawai']==''?'%%':'%'.$_GET['pegawai'].'%');
-        $tahun = ($_GET['tahun']=='all'?'%%':'%'.$_GET['tahun'].'%');
-        $keyword = ($_GET['keyword']==''?'%%':'%'.$_GET['keyword'].'%');
-    } else if($view=='edaran') {
-        $edaran = '%'.$_GET['edaran'].'%';
-        $tahun = '%%';
-    }
-
-    if($view=='primary'||$view=='telahbaca'){
-        include 'proc/query-normal.php';
-    } else if($view=='pkp') {
-        include 'proc/query-pkp.php';
-    } else {
-        include 'proc/query-search.php';
-    }
-    
-    $jumpage = ceil($kaun/20);
-
-    $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM sts2020 WHERE kodsekolah = ? ");
-    $kuri->execute([USER]);
-    $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
+$kuri = $PPD->prepare("SELECT * FROM `sts_dapat` where kodsekolah=? ");
+$kuri->execute([USER]);
+$surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
@@ -82,56 +38,40 @@
             </div>
         </div>
         <div class="col col-md order-first order-md-last">
-
+ <h4 class="card mt-4 font-weight-bold p-2 text-center">SENARAI PEROLEHAN PENYELENGGARAAN SEKOLAH</h4>
 <table class="table table-striped my-lh-1 text-center mb-0">
             <thead class="bg-warning text-light">
                 <tr>
-                    <th class="d-none d-md-table-cell">#</th>
-                    <th>TARIKH</th>
-                    <th>NO KEWPA / DAFTAR HARTA MODAL</th>
-                    <th>KATEGORI PERALATAN</th>
-                    <th>TAHUN PEROLEHAN</th>
-                    <th style="width:5%">TINDAKAN</th>
+                    
+                    <th>TAHUN</th>
+                    <th>KOMPUTER PERIBADI</th>
+                    <th>NOTEBOOK/LAPTOP</th>
+                    <th>PENCETAK</th>
+                    <th>LCD PROJEKTOR</th>
                 </tr>
             </thead>
             <tbody>
 <?php
-         $x=$offset;
+         $x=0;
                 foreach($surat as $s){
 $x++;
-                    $id = htmlspecialchars($s['ID']);
-                    $kewpa = htmlspecialchars($s['kewpa']);
-                    $kategori = htmlspecialchars($s['kategori']);
-                    $tahunperolehan = htmlspecialchars($s['tahunperolehan']);
-                   $tarikh = htmlspecialchars($s['tarikh']);
-                    include 'proc/kad-style.php';
+?>
+
+                <tr>
+                <td class="align-middle d-none d-md-table-cell"><?=  $s['tahunterima']; ?> </td>
+                <td class="align-middle my-lh-1 text-sm1"><?=  $s['pc']; ?></td>
+                <td class="text-left align-middle"><?=  $s['nb']; ?></td>
+                <td class="align-middle"><?=  $s['pencetak']; ?></td>
+                <td class="align-middle"><?=  $s['lcd']; ?></td>
+               
+                    </tr>    
+<?php
                     
                 } ?>
 
                 </tbody>
         </table>
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center flex-wrap">
-                        <?php
-                        $f1 = (isset($_GET['view'])?'view='.$_GET['view']:'view=primary');
-                        $f2 = (isset($_GET['edaran'])?'&edaran='.$_GET['edaran']:'');
-                        $f3 = (isset($_GET['keyword'])?'&keyword='.$_GET['keyword']:'');
-                        $f4 = (isset($_GET['pegawai'])?'&pegawai='.$_GET['pegawai']:'');
-                        $f5 = (isset($_GET['sektor'])?'&sektor='.$_GET['sektor']:'');
-                        $f6 = (isset($_GET['tahun'])?'&tahun='.$_GET['tahun']:'');
 
-                        if($jumpage>1){
-                            echo'<li class="page-item '.($page==1?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page=1"><i class="fa fa-fast-backward" aria-hidden="true"></i></a></li>';
-                            echo'<li class="page-item '.($page==1?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.($page-1).'"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li>';
-                            for($p=1;$p<=$jumpage;$p++){
-                                echo'<li class="page-item '.($p==$page?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.$p.'">'.$p.'</a></li>';
-                            }
-                            echo'<li class="page-item '.($page==$jumpage?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.($page+1).'"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li>';
-                            echo'<li class="page-item '.($page==$jumpage?'disabled':'').'"><a class="page-link" href="/ppdkluang/cpanel/sekolah/ict/?'.$f1.$f2.$f3.$f4.$f5.$f6.'&page='.$jumpage.'"><i class="fa fa-fast-forward" aria-hidden="true"></i></a></li>';
-                        }
-                        ?>
-                    </ul>
-                </nav>
         </div>
     </div>
 </div>

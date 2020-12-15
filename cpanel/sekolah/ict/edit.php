@@ -14,10 +14,10 @@
     $kuri->execute([$id]);
  $d = $kuri->fetch(PDO::FETCH_ASSOC);
 
-    $kuri = $PPD->query("SELECT kategori,kategori FROM sts2020 group by kategori");
+    $kuri = $PPD->query("SELECT * FROM sts_jawatan ");
     $keny = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
 
-    
+
 ?>
 
 
@@ -46,7 +46,8 @@
         </div>
         <div class="col col-md order-first order-md-last">
 
-                <form class="card-body form-ada-proses" action="cpanel/egerak/proc/isi.php" method="POST">
+                <form class="card-body form-ada-proses" action="proc/isi.php" method="POST">
+
                     <div class="form-group form-row">
                         <div class="col-4">
                             <label for="mula">No Tiket STS</label>
@@ -68,34 +69,87 @@
                         </div>
                         <div class="col-12">
                             <label for="mula">No KewPA / No Daftar Harta Modal</label>
-                            <input type="mula" class="form-control" value="<?= $d['kewpa'] ?>" name="mula">
+                            <input type="text" class="form-control" value="<?= $d['kewpa'] ?>" name="kewpa">
                         </div>
                         <div class="col-4">
                             <label for="hingga">TAHUN PEROLEHAN PERALATAN</label>
-                            <input type="hingga" class="form-control" value="<?= $d['tahunperolehan'] ?>" name="hingga">
+                            <input type="text" class="form-control" value="<?= $d['tahunperolehan'] ?>" name="tahunperolehan">
                         </div>
                         <div class="col-8">
                             <label for="hingga">LOKASI PERALATAN</label>
-                            <input type="hingga" class="form-control" value="<?= $d['lokasi'] ?>" name="hingga">
+                            <input type="text" class="form-control" value="<?= $d['lokasi'] ?>" name="lokasi">
                         </div>
                     </div>
 
 
                     <div class="form-group">
                         <label for="tajuk">KETERANGAN KEROSAKAN</label>
-                        <textarea rows="4" class="form-control"><?= $d['kerosakkan'] ?></textarea>
+                        <textarea   name="kerosakkan" rows="4" class="form-control"><?= $d['kerosakkan'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="lokasi">KETERANGAN PERALATAN</label>
-                       <textarea rows="4" class="form-control"><?= $d['keterangan'] ?></textarea>
+                       <textarea  rows="4" name="keterangan" class="form-control"><?= $d['keterangan'] ?></textarea>
                     </div>
                     <div class="text-center">
                         <button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> KEMBALI</button>
-                        <input type="hidden" name="id" value="<?= $id ?>">
+                        
   <a href=""  data-toggle="modal" data-target="#modalRegisterForm"><button  class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> SAHKAN PERALATAN</button></a>
 
                         
                     </div>
+
+
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">SAHKAN PERALATAN</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+
+          <label >NAMA PEGAWAI PENGESAH</label>
+                    <input type="text" name="pegawai"  class="form-control validate">
+        </div>
+
+        <div class="md-form mb-5">
+
+          <label data-error="wrong" data-success="right" for="orangeForm-name">JAWATAN</label>
+                     <select  name="jawatan" id="kat" class="form-control">
+                            <?php
+                            foreach($keny  as $k=>$v){
+                                echo'<option value="'.$k.'" '.($d['kategori']==$k?'selected':'').'>'.$v.'</option>';
+                            }
+                            ?>
+                        </select>
+        </div>
+
+      </div>
+
+
+
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+
+          <label data-error="wrong" data-success="right" for="orangeForm-name">Saya mengesahakan <b>Peralatan Tersebut Ada</b> dan <b>Mempunyai KewPA/Daftar Harta Modal</b> adalah tepat dan benar</label>
+                    
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+<input type="hidden" name="id" value="<?= $id ?>">
+        <button type="submit" name='kemaskini' class="btn btn-success">SAHKAN</button>
+      </div>
+    </div>
+  </div>
+</div>
+
                 </form>
                 
         </div>
@@ -136,43 +190,7 @@
     </script>
 
 
-<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">SAHKAN PERALATAN</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
 
-          <label data-error="wrong" data-success="right" for="orangeForm-name">NAMA PEGAWAI PENGESAH</label>
-                    <input type="text" id="orangeForm-name" class="form-control validate">
-        </div>
-
-
-
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Saya mengesahakan <b>Peralatan Tersebut Ada</b> dan <b>Mempunyai KewPA/Daftar Harta Modal</b> adalah tepat dan benar</label>
-                    
-        </div>
-
-
-
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-
-        <button class="btn btn-success">SAHKAN</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 

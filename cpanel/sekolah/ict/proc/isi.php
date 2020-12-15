@@ -1,7 +1,6 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT']."/cpanel/proc/auth.php");
-include($_SERVER['DOCUMENT_ROOT']."/cpanel/proc/pegawai.php");
-include($_SERVER['DOCUMENT_ROOT']."/cpanel/proc/function.php");
+require($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/proc/auth.php");
+
 
 if(isset($_POST['first'])){
     $mula = myDate2us($_POST['mula']);
@@ -45,17 +44,21 @@ if(isset($_POST['second'])){
 }
 
 if(isset($_POST['kemaskini'])){
-    $mula = myDate2us($_POST['mula']);
-    $hingga = myDate2us($_POST['hingga']);
-    $masa = $_POST['masa'];
-    $kat = $_POST['kat'];
-    $title = $_POST['tajuk'];
-    $location = $_POST['lokasi'];
-    $id = $_POST['id'];
 
-    $kuri = $PPD->prepare("UPDATE egerak_subutama SET actdate=?,enddate=?,masa=?,kategori=?,title=?,`location`=? WHERE id = ? AND kputama = ?");
-    if($kuri->execute([$mula,$hingga,$masa,$kat,$title,$location,$id,USER])){
+    $id = $_POST['id'];
+$kewpa = $_POST['kewpa'];
+$tahunperolehan = $_POST['tahunperolehan'];
+$lokasi = $_POST['lokasi'];
+$keterangan = $_POST['keterangan'];
+$kerosakkan = $_POST['kerosakkan'];
+$pegawai = $_POST['pegawai'];
+$jawatan = $_POST['jawatan'];
+    $kuri = $PPD->prepare("UPDATE sts2020 SET kewpa=?,tahunperolehan=?,lokasi=?,keterangan=?,kerosakkan=? WHERE id = ? AND kodsekolah = ?");
+    if($kuri->execute([$kewpa,$tahunperolehan,$lokasi,$keterangan,$kerosakkan,$id,USER])){
         $a = explode('/',$_POST['mula']);
+
+$kuri = $PPD->prepare("INSERT INTO `sts_pengesah`(`id_rekod`, `kodsekolah`, `pegawai`, `jawatan`) VALUES (?,?,?,?)");
+$kuri->execute([$id,USER,$pegawai,$jawatan]);
         header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
         exit();
     } else {
