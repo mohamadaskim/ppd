@@ -15,8 +15,14 @@
     $kuri->execute([$id]);
  $d = $kuri->fetch(PDO::FETCH_ASSOC);
 
+    $kuri = $PPD->query("SELECT kategori,kategori FROM `sts2020` group by kategori");
+    $kenya = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
+
     $kuri = $PPD->query("SELECT * FROM sts_jawatan ");
     $keny = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
+
+    $view = $_GET['view'];
+$page = "?page=".$_GET['page'];
 
 
 ?>
@@ -57,13 +63,13 @@
                         </div>
                         <div class="col-2">
                             <label for="mula">Tarikh Laporan</label>
-                            <input readonly type="mula" class="form-control" value="<?= $d['tarikh'] ?>" name="mula">
+                            <input readonly type="mula" class="form-control" value="<?= date('d/m/Y',strtotime($d['tarikh'])); ?>" name="mula">
                         </div>
                         <div class="col-6">
                             <label for="hingga">KATEGORI / JENIS PERALATAN</label>
  <select disabled name="kat" id="kat" class="form-control">
                             <?php
-                            foreach($keny as $k=>$v){
+                            foreach($kenya as $k=>$v){
                                 echo'<option value="'.$k.'" '.($d['kategori']==$k?'selected':'').'>'.$v.'</option>';
                             }
                             ?>
@@ -84,11 +90,11 @@
                     </div>
                     <div class="form-group  form-row">
                      <div class="col-6">
-                            <label for="hingga">JENAMA</label>
+                            <label for="hingga">JENAMA (cth : Acer/HP/DELL)</label>
                             <input type="text" id='jenama' required=required class="form-control" value="<?= $d['jenama'] ?>" name="jenama">
                         </div>
                      <div class="col-6">
-                            <label for="hingga">MODEL</label>
+                            <label for="hingga">MODEL (cth : M1930/DX2810/M670)</label>
                             <input type="text" id="model" required=required class="form-control" value="<?= $d['model'] ?>" name="model">
                         </div>
                     </div>
@@ -102,7 +108,7 @@
                        <textarea  rows="4" name="keterangan" class="form-control"><?= $d['keterangan'] ?></textarea>
                     </div>
                     <div class="text-center">
-                        <button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> KEMBALI</button>
+                    <a href="<?php echo $view.$page; ?>"  ><button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> KEMBALI</button></a>    
     <a href=""  data-toggle="modal" data-target="#modalRegisterForm">     </a>                
  <button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> <?php if($d['pegawai']!='') { ?>KEMASKINI<?php } else { ?>SAHKAN PERALATAN<?php } ?></button>
 

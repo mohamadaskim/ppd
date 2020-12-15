@@ -104,10 +104,10 @@ $x++;
                     $kewpa = htmlspecialchars($s['kewpa']);
                     $kategori = htmlspecialchars($s['kategori']);
                     $tahunperolehan = htmlspecialchars($s['tahunperolehan']);
-                   $tarikh = htmlspecialchars($s['tarikh']);
+                   $tarikh = date('d/m/Y',strtotime($s['tarikh']));
                    $sahkan = htmlspecialchars($s['pegawai']);
                     $urla = htmlspecialchars (basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']));
-                   
+
                     include 'proc/kad-style.php';
                     
                 } ?>
