@@ -3,7 +3,8 @@
     $page = 'inbox';
     include($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/sekolah/header.php");
 
-
+$s_pengesah=$_SESSION['PENGESAH'];
+$s_pengesahj=$_SESSION['PENGESAHJ'];
     if(!isset($_GET['id'])){
         header('Location: senarai.php');
         exit();
@@ -43,7 +44,7 @@ $page = "?page=".$_GET['page'];
 
 
 <div class="main">
-    <img src="/cpanel/img/toptitle.png" alt="Top Title" class="w-100">
+    <img src="/ppdkluang/cpanel/img/toptitle.png" alt="Top Title" class="w-100">
     <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">SENARAI PERMOHONAN STS SEKOLAH <br>(Permohonan Penyelenggaraan ICT Sekolah)</h3>
     <div class="row mt-3">
         <div class="col-12 col-md-3 order-last order-md-first mt-3 mt-md-0">
@@ -53,7 +54,7 @@ $page = "?page=".$_GET['page'];
         </div>
         <div class="col col-md order-first order-md-last">
 
-                <form class="card-body form-ada-proses" id="form" action="proc/isi.php" method="POST">
+                <form class="card-body form-ada-proses" id="form" action="/ppdkluang/cpanel/sekolah/ict/proc/isi.php" method="POST">
 <input type="hidden" name=page value="<?= $_GET['page'] ?>">
 <input type="hidden" name=view value="<?= $_GET['view'] ?>">
                     <div class="form-group form-row">
@@ -108,7 +109,7 @@ $page = "?page=".$_GET['page'];
                        <textarea  rows="4" name="keterangan" class="form-control"><?= $d['keterangan'] ?></textarea>
                     </div>
                     <div class="text-center">
-                    <a href="<?php echo $view.$page; ?>"  ><button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> KEMBALI</button></a>    
+                    <a href="/ppdkluang/cpanel/sekolah/ict/<?php echo $view.$page; ?>"  ><button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> KEMBALI</button></a>    
     <a href=""  data-toggle="modal" data-target="#modalRegisterForm">     </a>                
  <button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> <?php if($d['pegawai']!='') { ?>KEMASKINI<?php } else { ?>SAHKAN PERALATAN<?php } ?></button>
 
@@ -172,7 +173,7 @@ if(isValid==true) $('#modalRegisterForm').modal('show');
         <div class="md-form mb-5">
 
           <label >NAMA PEGAWAI PENGESAH</label>
-                    <input required type="text" name="pegawai"  class="form-control validate" value="<?= $d['pegawai'] ?>">
+                    <input required type="text" name="pegawai"  class="form-control validate" value="<?php if($d['pegawai']=='') { echo $s_pengesah; } else { echo $d['pegawai']; }?>">
         </div>
 
         <div class="md-form mb-5">
@@ -181,8 +182,9 @@ if(isValid==true) $('#modalRegisterForm').modal('show');
                      <select  required name="jawatan" id="kat" class="form-control">
                         <option value=''>Sila Pilih</option>
                             <?php
+                            if($d['jawatan']=='') {$val=$s_pengesahj;} else {$val=$d['jawatan'];}
                             foreach($keny  as $k=>$v){
-                                echo'<option value="'.$k.'" '.($d['jawatan']==$k?'selected':'').'>'.$v.'</option>';
+                                echo'<option value="'.$k.'" '.($val==$k?'selected':'').'>'.$v.'</option>';
                             }
                             ?>
                         </select>

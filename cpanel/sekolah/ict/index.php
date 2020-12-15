@@ -1,7 +1,7 @@
 <?php
     $page = 'inbox';
     include($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/sekolah/header.php");
-
+$_SESSION['redir']=$_SERVER['REQUEST_URI'];
 
    $view = '1';
 
@@ -43,7 +43,8 @@ $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
         <div class="col col-md order-first order-md-last">
-<h3 class="card mt-4 font-weight-bold p-2 text-center bg-danger text-light "><?= $xbaca; ?> UNIT <br>PERALATAN YANG BELUM DI SAHKAN UNTUK PERMOHONAN PEROLEHAN TAHUN 2021<br>SILA SEMAK SENARAI PERMOHONAN</h3>
+            <?php if($xbaca!=0)  { ?>
+<h3 class="card mt-4 font-weight-bold p-2 text-center bg-danger text-light "><?= $xbaca; ?> UNIT <br>PERALATAN STS YANG BELUM DI SAHKAN UNTUK PERMOHONAN PEROLEHAN TAHUN 2021<br>SILA SEMAK SENARAI PERMOHONAN</h3><?php } ?>
 
 
  <h4 class="card mt-4 font-weight-bold p-2 text-center">SENARAI PEROLEHAN PENYELENGGARAAN SEKOLAH</h4>

@@ -56,6 +56,8 @@ $jawatan = $_POST['jawatan'];
 $jenama = $_POST['jenama'];
 $model = $_POST['model'];
 $view = $_POST['view'];
+$_SESSION['PENGESAH']=$pegawai;
+$_SESSION['PENGESAHJ']=$jawatan;
 $page = "?page=".$_POST['page'];
     $kuri = $PPD->prepare("UPDATE sts2020 SET kewpa=?,tahunperolehan=?,lokasi=?,keterangan=?,kerosakkan=?,jenama=?,model=? WHERE id = ? AND kodsekolah = ?");
     if($kuri->execute([$kewpa,$tahunperolehan,$lokasi,$keterangan,$kerosakkan,$jenama,$model,$id,USER])){
