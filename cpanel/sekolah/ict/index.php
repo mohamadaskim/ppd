@@ -66,14 +66,14 @@ $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
 $x++;
 ?>
 
-                <tr>
-                <td class="align-middle d-none d-md-table-cell"><?=  $s['tahunterima']; ?> </td>
-                <td class="align-middle my-lh-1 text-sm1"><?=  $s['pc']; ?></td>
-                <td class="text-left align-middle"><?=  $s['nb']; ?></td>
+                 <tr>
+                <td class="align-middle"><?=  $s['tahunterima']; ?> </td>
+                <td class="align-middle"><?=  $s['pc']; ?></td>
+                <td class="align-middle"><?=  $s['nb']; ?></td>
                 <td class="align-middle"><?=  $s['pencetak']; ?></td>
                 <td class="align-middle"><?=  $s['lcd']; ?></td>
                
-                    </tr>    
+                    </tr>     
 <?php
                     
                 } ?>
