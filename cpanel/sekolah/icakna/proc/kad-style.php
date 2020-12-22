@@ -3,7 +3,7 @@
                 <tr>
                 <td class="align-middle d-none d-md-table-cell"><?=  $x; ?></td>
                 <td class="align-middle my-lh-1 text-sm1"><?=  $tarikh; ?></td>
-                <td class="text-left align-middle"><span class="text-info font-weight-bold"><?=  $kewpa; ?></span><?php  if($sahkan!='') { ?><br><small class="text-info ">Disahkan Oleh <?=  $sahkan; ?></small> <?php } ?>
+                <td class=" align-middle"><span class="text-info font-weight-bold"><?=  $kewpa; ?></span><?php  if($sahkan!='') { ?><br><small class="text-info ">Disahkan Oleh <?=  $sahkan; ?></small> <?php } ?>
                 </td>
                         <td class="align-middle"><?=  $kategori; ?></td>
                         <td class="align-middle"><?=  $tahunperolehan; ?></td>
