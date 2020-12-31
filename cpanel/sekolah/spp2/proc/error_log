@@ -1,0 +1,10 @@
+[19-Oct-2020 15:52:41 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php:7
+Stack trace:
+#0 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/proc/download.php(2): require()
+#1 {main}
+  thrown in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php on line 7
+[19-Oct-2020 15:52:49 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php:7
+Stack trace:
+#0 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/proc/download.php(2): require()
+#1 {main}
+  thrown in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php on line 7
