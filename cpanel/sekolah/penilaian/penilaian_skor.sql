@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 06, 2021 at 06:27 AM
+-- Generation Time: Jan 06, 2021 at 06:39 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -25,6 +25,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `penilaian_perkara`
+--
+
+CREATE TABLE `penilaian_perkara` (
+  `ID` int(11) NOT NULL,
+  `tajuk` text NOT NULL,
+  `data` varchar(20) NOT NULL,
+  `radio` int(11) NOT NULL,
+  `kategori` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `penilaian_perkara`
+--
+
+INSERT INTO `penilaian_perkara` (`ID`, `tajuk`, `data`, `radio`, `kategori`) VALUES
+(1, 'Keselamatan', 'radio', 5, 1),
+(2, 'Kebersihan', 'radio', 2, 1),
+(3, 'Catatan', 'text', 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `penilaian_skor`
 --
 
@@ -41,6 +64,12 @@ CREATE TABLE `penilaian_skor` (
 --
 
 --
+-- Indexes for table `penilaian_perkara`
+--
+ALTER TABLE `penilaian_perkara`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `penilaian_skor`
 --
 ALTER TABLE `penilaian_skor`
@@ -49,6 +78,12 @@ ALTER TABLE `penilaian_skor`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `penilaian_perkara`
+--
+ALTER TABLE `penilaian_perkara`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `penilaian_skor`
