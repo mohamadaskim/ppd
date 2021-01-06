@@ -12,6 +12,7 @@
     $kuri = $PPD->prepare("SELECT * FROM sts2020 WHERE id = ? LIMIT 1");
     $kuri->execute([$id]);
     $d = $kuri->fetch(PDO::FETCH_ASSOC);
+
     $kuri = $PPD->query("SELECT kategori,kategori FROM sts2020 group by kategori");
     $keny = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
 

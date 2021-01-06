@@ -6,8 +6,8 @@
 $s_pengesah=$_SESSION['PENGESAH'];
 $s_pengesahj=$_SESSION['PENGESAHJ'];
     if(!isset($_GET['id'])){
-       // header('Location: senarai.php');
-       // exit();
+        header('Location: senarai.php');
+        exit();
     }
 
     $id = htmlspecialchars($_GET['id']);
@@ -16,7 +16,7 @@ $s_pengesahj=$_SESSION['PENGESAHJ'];
     $kuri->execute([$id]);
  $d = $kuri->fetch(PDO::FETCH_ASSOC);
 
-    $kuri = $PPD->query("SELECT * FROM `icakna_kat`");
+    $kuri = $PPD->query("SELECT kategori,kategori FROM `sts2020` group by kategori");
     $kenya = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
 
     $kuri = $PPD->query("SELECT * FROM sts_jawatan ");
@@ -45,7 +45,7 @@ $page = "?page=".$_GET['page'];
 
 <div class="main">
     <img src="/ppdkluang/cpanel/img/toptitle.png" alt="Top Title" class="w-100">
-    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">DAFTAR</h3>
+    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">SENARAI PERMOHONAN STS SEKOLAH <br>(Permohonan Penyelenggaraan ICT Sekolah)</h3>
     <div class="row mt-3">
         <div class="col-12 col-md-3 order-last order-md-first mt-3 mt-md-0">
             <div class="sticky-filter">
@@ -54,59 +54,64 @@ $page = "?page=".$_GET['page'];
         </div>
         <div class="col col-md order-first order-md-last">
 
-                <form class="card-body form-ada-proses" id="form" action="/ppdkluang/cpanel/sekolah/icakna/proc/isi.php" method="POST">
+                <form class="card-body form-ada-proses" id="form" action="/ppdkluang/cpanel/sekolah/ict/proc/isi.php" method="POST">
 <input type="hidden" name=page value="<?= $_GET['page'] ?>">
 <input type="hidden" name=view value="<?= $_GET['view'] ?>">
                     <div class="form-group form-row">
-
+                        <div class="col-4">
+                            <label for="mula">No Tiket STS</label>
+                            <input readonly type="mula" class="form-control" value="<?= $d['notiket'] ?>" name="mula">
+                        </div>
+                        <div class="col-2">
+                            <label for="mula">Tarikh Laporan</label>
+                            <input readonly type="mula" class="form-control" value="<?= date('d/m/Y',strtotime($d['tarikh'])); ?>" name="mula">
+                        </div>
                         <div class="col-6">
-                            <label for="hingga">KRETERIA</label>
- <select  name="krateria" id="kat" class="form-control">
-    <option value="" >Sila Pilih</option>
+                            <label for="hingga">KATEGORI / JENIS PERALATAN</label>
+ <select disabled name="kat" id="kat" class="form-control">
                             <?php
                             foreach($kenya as $k=>$v){
-                                echo'<option value="'.$k.'" '.($d['krateria']==$k?'selected':'').'>'.$v.'</option>';
+                                echo'<option value="'.$k.'" '.($d['kategori']==$k?'selected':'').'>'.$v.'</option>';
                             }
                             ?>
                         </select>
                         </div>
-
-                        <div class="col-6">
-                            <label for="hingga">KATEGORI PEGAWAI</label>
- <select  name="kat" id="kat" class="form-control">
-<option value="" >Sila Pilih</option>
-<option value="guru" >GURU</option>
-<option value="akp" >AKP</option>
-                        </select>
-                        </div>
-
                         <div class="col-12">
-                            <label for="mula">NAMA GURU/PEGAWAI</label>
-                            <input type="mula" class="form-control" value="<?= $d['nama'] ?>" name="nama">
+                            <label for="mula">No KewPA / No Daftar Harta Modal</label>
+                            <input type="text" class="form-control" value="<?= $d['kewpa'] ?>" name="kewpa">
                         </div>
-
-
-
+                        <div class="col-4">
+                            <label for="hingga">TAHUN PEROLEHAN PERALATAN</label>
+                            <input type="text" required=required class="form-control" value="<?= $d['tahunperolehan'] ?>" name="tahunperolehan">
+                        </div>
+                        <div class="col-8">
+                            <label for="hingga">LOKASI PERALATAN</label>
+                            <input type="text"  required=required class="form-control" value="<?= $d['lokasi'] ?>" name="lokasi">
+                        </div>
                     </div>
-
+                    <div class="form-group  form-row">
+                     <div class="col-6">
+                            <label for="hingga">JENAMA (cth : Acer/HP/DELL)</label>
+                            <input type="text" id='jenama' required=required class="form-control" value="<?= $d['jenama'] ?>" name="jenama">
+                        </div>
+                     <div class="col-6">
+                            <label for="hingga">MODEL (cth : M1930/DX2810/M670)</label>
+                            <input type="text" id="model" required=required class="form-control" value="<?= $d['model'] ?>" name="model">
+                        </div>
+                    </div>
 
                     <div class="form-group">
-                        <label for="tajuk">KETERANGAN KESIHATAN</label>
-                        <textarea   name="keterangan" rows="4" class="form-control"><?= $d['keterangan'] ?></textarea>
+                        <label for="tajuk">KETERANGAN KEROSAKAN</label>
+                        <textarea   name="kerosakkan" rows="4" class="form-control"><?= $d['kerosakkan'] ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="lokasi">NYATAKAN ISU/MASALAH YANG MENYEBABKAN PRESTASI TERJEJAS</label>
-                       <textarea  rows="4" name="isu" class="form-control"><?= $d['isu'] ?></textarea>
+                        <label for="lokasi">KETERANGAN PERALATAN</label>
+                       <textarea  rows="4" name="keterangan" class="form-control"><?= $d['keterangan'] ?></textarea>
                     </div>
-
-
-
-
-
                     <div class="text-center">
-                    <a href="/ppdkluang/cpanel/sekolah/icakna/<?php echo $view.$page; ?>"  ><button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> BATAL</button></a>    
+                    <a href="/ppdkluang/cpanel/sekolah/ict/<?php echo $view.$page; ?>"  ><button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> KEMBALI</button></a>    
     <a href=""  data-toggle="modal" data-target="#modalRegisterForm">     </a>                
- <button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> DAFTAR</button>
+ <button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> <?php if($d['pegawai']!='') { ?>KEMASKINI<?php } else { ?>SAHKAN PERALATAN<?php } ?></button>
 
 
 <script>
@@ -159,31 +164,29 @@ if(isValid==true) $('#modalRegisterForm').modal('show');
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">SAHKAN</h4>
+        <h4 class="modal-title w-100 font-weight-bold">SAHKAN PERALATAN</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body mx-3">
-
-
         <div class="md-form mb-5">
 
-                            <label for="hingga">RUJUKAN KEPADA KAUNSELOR PENDIDIKAN DAERAH?</label>
- <select  name="tindakan" id="kat" class="form-control">
-<option value="" >Sila Pilih</option>
-<option value="0" >HANYA MAKLUMAN</option>
-<option value="1" >PERLU SESI KAUNSELING</option>
-                        </select>
+          <label >NAMA PEGAWAI PENGESAH</label>
+                    <input required type="text" name="pegawai"  class="form-control validate" value="<?php if($d['pegawai']=='') { echo $s_pengesah; } else { echo $d['pegawai']; }?>">
         </div>
 
         <div class="md-form mb-5">
 
-                            <label for="hingga">JAWATAN PENDAFTAR</label>
- <select  name="pengisi" id="kat" class="form-control">
-<option value="" >Sila Pilih</option>
-<option value="GB" >GURU BESAR</option>
-<option value="GPK" >GURU PENOLONG KANAN</option>
+          <label data-error="wrong" data-success="right" for="orangeForm-name">JAWATAN</label>
+                     <select  required name="jawatan" id="kat" class="form-control">
+                        <option value=''>Sila Pilih</option>
+                            <?php
+                            if($d['jawatan']=='') {$val=$s_pengesahj;} else {$val=$d['jawatan'];}
+                            foreach($keny  as $k=>$v){
+                                echo'<option value="'.$k.'" '.($val==$k?'selected':'').'>'.$v.'</option>';
+                            }
+                            ?>
                         </select>
         </div>
 
@@ -194,7 +197,7 @@ if(isValid==true) $('#modalRegisterForm').modal('show');
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
 
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Saya mengesahakan <b>Pegawai Tersebut</b> adalah tepat dan benar</label>
+          <label data-error="wrong" data-success="right" for="orangeForm-name">Saya mengesahakan <b>Peralatan Tersebut Ada</b> dan <b>Mempunyai KewPA/Daftar Harta Modal</b> adalah tepat dan benar</label>
                     
         </div>
 
@@ -203,7 +206,7 @@ if(isValid==true) $('#modalRegisterForm').modal('show');
       </div>
       <div class="modal-footer d-flex justify-content-center">
 <input type="hidden" name="id" value="<?= $id ?>">
-        <button type="submit" name='kemaskini' class="btn btn-success">DAFTAR</button>
+        <button type="submit" name='kemaskini' class="btn btn-success">SAHKAN</button>
       </div>
     </div>
   </div>

@@ -43,6 +43,22 @@ if(isset($_POST['second'])){
     exit();
 }
 
+
+if(isset($_POST['simpan'])){
+$bulan = $_POST['bulan'];
+$jawatan = $_POST['jawatan'];
+$peranti1 = $_POST['peranti1'];
+$peranti2 = $_POST['peranti2'];
+$page = "?page=".$_POST['page'];
+$kuri = $PPD->prepare("INSERT INTO `spp`( `kodsekolah`, `tarikh`, `catatan`) VALUES ( ?, ?, ?)");
+$kuri->execute([USER,$bulan,$jawatan]);
+
+    header('Location: ../.');
+
+    
+}
+
+
 if(isset($_POST['kemaskini'])){
 
     $id = $_POST['id'];

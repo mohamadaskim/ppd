@@ -60,7 +60,7 @@ $page = "?page=".$_GET['page'];
 
 
 
-                <form class="card-body form-ada-proses" id="form" action="/ppdkluang/cpanel/sekolah/ict/proc/isi.php" method="POST">
+                <form class="card-body form-ada-proses" id="form" action="/ppdkluang/cpanel/sekolah/spp2/proc/isi.php" method="POST">
 <input type="hidden" name=page value="<?= $_GET['page'] ?>">
 <input type="hidden" name=view value="<?= $_GET['view'] ?>">
 
@@ -79,7 +79,7 @@ $page = "?page=".$_GET['page'];
 
                         <div class="col-6">
                             <label for="hingga">BULAN</label>
- <select  name="kat" id="kat" class="form-control col-form-label-sm">
+ <select  name="bulan" id="kat" class="form-control col-form-label-sm">
     
                             <?php
                             foreach($kenya as $k=>$v){
@@ -92,7 +92,7 @@ $page = "?page=".$_GET['page'];
 
                         <div class="col-6">
                             <label for="hingga">TAHUN </label>
- <select  name="kat" id="kat" class="form-control col-form-label-sm">
+ <select  name="tahun" id="kat" class="form-control col-form-label-sm">
     <option value="2020" >2020</option>
 
                         </select>
@@ -144,8 +144,8 @@ $page = "?page=".$_GET['page'];
 
                     <div class="text-center">
    
-    <a href=""  data-toggle="modal" data-target="#modalRegisterForm">     </a>                
- <button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN</button>
+                
+ <button type="submit"  class="btn btn-success" name="simpan"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN</button>
 
 
 <script>
@@ -193,48 +193,7 @@ if(isValid==true) $('#modalRegisterForm').modal('show');
 
 
 
-<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">SAHKAN UJILARI</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
 
-          <label >NAMA PEGAWAI PENGESAH</label>
-                    <input required type="text" name="pegawai"  class="form-control validate" value="<?php if($d['pegawai']=='') { echo $s_pengesah; } else { echo $d['pegawai']; }?>">
-        </div>
-
-        <div class="md-form mb-5">
-
-          <label data-error="wrong" data-success="right" for="orangeForm-name">JAWATAN</label>
-                     <select  required name="jawatan" id="kat" class="form-control">
-                        <option value=''>Sila Pilih</option>
-                            <?php
-                            if($d['jawatan']=='') {$val=$s_pengesahj;} else {$val=$d['jawatan'];}
-                            foreach($keny  as $k=>$v){
-                                echo'<option value="'.$k.'" '.($val==$k?'selected':'').'>'.$v.'</option>';
-                            }
-                            ?>
-                        </select>
-        </div>
-
-      </div>
-
-
-
-      <div class="modal-footer d-flex justify-content-center">
-<input type="hidden" name="id" value="<?= $id ?>">
-        <button type="submit" name='kemaskini' class="btn btn-success">SIMPAN DAN CETAK</button>
-      </div>
-    </div>
-  </div>
-</div>
 
                 </form>
                 

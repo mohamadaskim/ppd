@@ -9,10 +9,10 @@
                         <td class="align-middle"><?=  $tahunperolehan; ?></td>
                         <td  class="align-middle">
 
-                        <a style="display: inline;" href="/ppdkluang/cpanel/sekolah/ict/edit.php?id=<?=  $id; ?>&view=<?=  $urla; ?>&page=<?=  $page; ?>" class=" btn btn-block btn-sm btn-success"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        
 
                      <?php  if($sahkan=='') { ?>
-                        <a style="display: inline;" href="/ppdkluang/cpanel/sekolah/ict/proc/isi.php?buang=<?=  $id; ?>&view=<?=  $urla; ?>&page=<?=  $page; ?>" class="buang btn btn-block btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a style="display: inline;" href="/ppdkluang/cpanel/sekolah/icakna/proc/isi.php?buang=<?=  $id; ?>&view=<?=  $urla; ?>&page=<?=  $page; ?>" class="buang btn btn-block btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
 <?php } ?>
 
                     </td>
