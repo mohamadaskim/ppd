@@ -1,25 +1,9 @@
 <?php
-$kuri = $PPD->prepare("SELECT muatturun.*,users.realname,users.gambar,users.jawatan,users.sektor FROM muatturun
-INNER JOIN users ON muatturun.owner = users.username
-INNER JOIN muatturun_analisis ON muatturun.id = muatturun_analisis.idsurat
-WHERE muatturun_analisis.baca $baca 0
-AND YEAR(muatturun.dateadded) = ?
-AND muatturun_analisis.kodsekolah = ?
-AND muatturun.publish = 1
-AND (muatturun.edaran = '008' OR muatturun.edaran = '007')
-ORDER BY muatturun.dateadded DESC LIMIT 10 OFFSET {$offset}");
-$kuri->execute([date('Y'),USER]);
+$kuri = $PPD->prepare("SELECT * FROM `penilaian_perkara`");
+$kuri->execute([USER]);
 $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
 
 //utk pagination
-$kuri = $PPD->prepare("SELECT COUNT(*) as bil FROM muatturun
-INNER JOIN users ON muatturun.owner = users.username
-INNER JOIN muatturun_analisis ON muatturun.id = muatturun_analisis.idsurat
-WHERE muatturun_analisis.baca $baca 0
-AND YEAR(muatturun.dateadded) = ?
-AND muatturun_analisis.kodsekolah = ?
-AND muatturun.publish = 1
-AND (muatturun.edaran = '008' OR muatturun.edaran = '007')
-ORDER BY muatturun.dateadded DESC");
-$kuri->execute([date('Y'),USER]);
+$kuri = $PPD->prepare("SELECT COUNT(*) as bil FROM sts2020  where  kodsekolah=? and status =0");
+$kuri->execute([USER]);
 $kaun = $kuri->fetch()['bil'];
