@@ -1,5 +1,7 @@
 <?php
-$kuri = $PPD->prepare("SELECT * FROM `penilaian_perkara`");
+$kat=1;
+if(isset($_GET['kat'])) $kat=$_GET['kat'];
+$kuri = $PPD->prepare("SELECT * FROM `penilaian_perkara` where kategori=$kat");
 $kuri->execute([USER]);
 $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
 $kuri = $PPD->prepare("SELECT COUNT(*) as bil FROM sts2020  where  kodsekolah=? and status =0");

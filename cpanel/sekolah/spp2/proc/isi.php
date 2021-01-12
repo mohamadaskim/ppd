@@ -45,6 +45,20 @@ if(isset($_POST['second'])){
 
 
 if(isset($_POST['simpan'])){
+
+
+    $x=0;
+    $insert='';
+ foreach($_POST['peranti'] as $s){
+
+//echo $x.'-'.$_GET['data'][$x].'- data-'.$s.'<br>';
+$insert.= '("'.USER.'",'.$x.',"'.$s.'"),';
+$x++;
+ }
+
+ $insert=rtrim($insert,',');
+echo $insert;
+
 $bulan = $_POST['bulan'];
 $jawatan = $_POST['jawatan'];
 $peranti1 = $_POST['peranti1'];
@@ -61,20 +75,12 @@ $kuri->execute([USER,$bulan,$jawatan]);
 
 if(isset($_POST['kemaskini'])){
 
-    $id = $_POST['id'];
-$kewpa = $_POST['kewpa'];
-$tahunperolehan = $_POST['tahunperolehan'];
-$lokasi = $_POST['lokasi'];
-$keterangan = $_POST['keterangan'];
-$kerosakkan = $_POST['kerosakkan'];
-$pegawai = $_POST['pegawai'];
-$jawatan = $_POST['jawatan'];
-$jenama = $_POST['jenama'];
-$model = $_POST['model'];
-$view = $_POST['view'];
-$_SESSION['PENGESAH']=$pegawai;
-$_SESSION['PENGESAHJ']=$jawatan;
-$page = "?page=".$_POST['page'];
+
+
+
+
+
+
     $kuri = $PPD->prepare("UPDATE sts2020 SET kewpa=?,tahunperolehan=?,lokasi=?,keterangan=?,kerosakkan=?,jenama=?,model=? WHERE id = ? AND kodsekolah = ?");
     if($kuri->execute([$kewpa,$tahunperolehan,$lokasi,$keterangan,$kerosakkan,$jenama,$model,$id,USER])){
         $a = explode('/',$_POST['mula']);
@@ -83,9 +89,7 @@ $kuri = $PPD->prepare("INSERT INTO `sts_pengesah`(`id_rekod`, `kodsekolah`, `peg
 $kuri->execute([$id,USER,$pegawai,$jawatan,$pegawai,$jawatan]);
         //header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
 ?>
-<script>alert("Peralatan Dikemaskini");
-window.location.href='../<?php echo $view.$page; ?>';
-</script>
+
 
 <?php
         exit();

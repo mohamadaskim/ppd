@@ -1,4 +1,8 @@
+
+
 <?php
+
+
     $page = 'inbox';
     include($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/sekolah/header.php");
 $_SESSION['redir']=$_SERVER['REQUEST_URI'];
@@ -13,11 +17,24 @@ $kuri->execute([USER]);
 $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
 
 
-    $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM sts2020 s left join sts_pengesah p on p.id_rekod=s.ID WHERE s.kodsekolah = ? and status = 0 and pegawai is null");
+    $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM icakna_senarai s  WHERE s.kodsekolah = ? ");
     $kuri->execute([USER]);
     $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
 ?>
 
+<script>
+    var popup = prompt("Password Kaunseling Daerah : ");
+    if(popup =='KOD'){
+
+    }
+    else
+    {
+        alert("Tiada Akses");
+window.location.href='../index.php';
+
+
+    }
+</script>
 
 <head>
     <meta charset="utf-8">
@@ -45,7 +62,9 @@ $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
         <div class="col col-md order-first order-md-last">
    <center>         
 <h3 class="card mt-4 font-weight-bold p-2 text-center bg-info text-light ">MEMPUNYAI PEGAWAI UNTUK DI RUJUK KE KAUNSELOR?</h3>
- <button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i>ADA</button> <button  id="submit-button" class="btn btn-danger" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i>TIADA</button>
+
+ <button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i>ADA</button><?php if($xbaca==0){ ?><button  id="submit-button" class="btn btn-danger" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i>TIADA</button><?php } ?>
+
 </center>
  
 

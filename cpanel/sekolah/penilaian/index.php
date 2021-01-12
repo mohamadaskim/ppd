@@ -52,11 +52,20 @@
     
     $jumpage = ceil($kaun/10);
 
-    $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM muatturun_analisis
-                            INNER JOIN muatturun ON muatturun_analisis.idsurat = muatturun.id
-                            WHERE muatturun_analisis.kodsekolah = ? AND muatturun_analisis.baca = 0 AND muatturun.publish = 1");
-    $kuri->execute([USER]);
-    $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
+
+function skor($PPD,$bulan,$jenis){
+
+      $kuri = $PPD->prepare("SELECT ((sum(d.value)/sum(p.radio))*100) jumlah FROM penilaian_bulan b inner join`penilaian_data` d on b.ID=d.data_id inner join penilaian_perkara p on p.ID=d.perkara_id where p.data='radio' and p.kategori=? and MONTH(b.tarikh)=? and b.kodsekolah=?");
+    $kuri->execute([$jenis,$bulan,USER]);
+    $dat=$kuri->fetch(PDO::FETCH_ASSOC);
+//$nilai= (int)$dat['bil'];
+$jumlah= (int)$dat['jumlah'];
+//$total=ceil(($nilai / 7)*100);
+    return $jumlah;  
+}
+
+
+
 ?>
 
 
@@ -76,7 +85,7 @@
 
 <div class="main">
     <img src="/cpanel/img/toptitle.png" alt="Top Title" class="w-100">
-    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">PENILAIAN KEBERISHAN DAN PENGAWAL KESELAMATAN</h3>
+    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">PENILAIAN KEBERISHAN DAN PENGAWAL KESELAMATAN </h3>
     <div class="row mt-3">
         <div class="col-12 col-md-3 order-last order-md-first mt-3 mt-md-0">
             <div class="sticky-filter">
@@ -158,13 +167,13 @@
                 borderColor: window.chartColors.green,
                 borderWidth: 1,
                 data: [
-                    95,
-                    95,
-                    96,
-                    82,
-                    1,
-                    5,
-                    3
+                   <?php echo skor($PPD,1,1); ?>,
+                    <?php echo skor($PPD,2,1); ?>,
+                    <?php echo skor($PPD,3,1); ?>,
+                    <?php echo skor($PPD,4,1); ?>,
+                    <?php echo skor($PPD,5,1); ?>,
+                    <?php echo skor($PPD,6,1); ?>,
+                    <?php echo skor($PPD,7,1); ?>
                 ]
             }, {
                 label: 'KESELAMATAN',
@@ -172,13 +181,13 @@
                 borderColor: window.chartColors.blue,
                 borderWidth: 1,
                 data: [
-                      65,
-                    15,
-                    26,
-                    12,
-                    55,
-                    52,
-                    31
+                   <?php echo skor($PPD,1,2); ?>,
+                    <?php echo skor($PPD,2,2); ?>,
+                    <?php echo skor($PPD,3,2); ?>,
+                    <?php echo skor($PPD,4,2); ?>,
+                    <?php echo skor($PPD,5,2); ?>,
+                    <?php echo skor($PPD,6,2); ?>,
+                    <?php echo skor($PPD,7,2); ?>
                 ]
             }]
 

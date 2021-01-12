@@ -51,6 +51,19 @@
         include 'proc/query-search.php';
     }
     
+function kategori($id){
+if($id=='akp') $dat='AKP';
+if($id=='guru') $dat='GURU';
+return $dat;   
+
+}
+function tindakan($id){
+if($id==0) $dat='Makluman KOD';
+if($id==1) $dat='Kaunseling KOD';
+return $dat;    
+}
+
+
     $jumpage = ceil($kaun/20);
 
     $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM sts2020 WHERE kodsekolah = ? and status=0");
@@ -102,9 +115,9 @@
 $x++;
                     $id = htmlspecialchars($s['ID']);
                     $kewpa = htmlspecialchars($s['nama']);
-                    $kategori = htmlspecialchars($s['kategori']);
-                    $tahunperolehan = htmlspecialchars($s['tindakan']);
-                   $tarikh = date('d/m/Y',strtotime($s['tarikh']));
+                    $kategori = htmlspecialchars(kategori($s['kategori']));
+                    $tahunperolehan = htmlspecialchars(tindakan($s['tindakan']));
+                   $tarikh = date('d/m/Y',strtotime($s['timestamps']));
                    $sahkan = htmlspecialchars($s['pegawai']);
                     $urla = htmlspecialchars (basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']));
 

@@ -78,28 +78,15 @@ $page = "?page=".$_GET['page'];
                     <div class="form-group form-row">
 
                         <div class="col-6">
-                            <label for="hingga">BULAN</label>
- <select  name="bulan" id="kat" class="form-control col-form-label-sm">
-    
-                            <?php
-                            foreach($kenya as $k=>$v){
-                                echo'<option value="'.$k.'" '.($d['kategori']==$k?'selected':'').'>'.$v.'</option>';
-                            }
-                            ?>
-                        </select>
+                            <label for="hingga">TARIKH</label>
+<input type="date" class="form-control" name='tarikh' >
                         </div>
+
+
+
 
 
                         <div class="col-6">
-                            <label for="hingga">TAHUN </label>
- <select  name="tahun" id="kat" class="form-control col-form-label-sm">
-    <option value="2020" >2020</option>
-
-                        </select>
-                        </div>
-
-
-                        <div class="col-12">
                             <label for="hingga">JAWATAN</label>
 <select  required name="jawatan" id="kat" class="form-control">
                         <option value=''>Sila Pilih</option>
@@ -119,24 +106,25 @@ $page = "?page=".$_GET['page'];
 
                     <div class="form-group">
                         <label for="tajuk">SENARAI PERANTI</label>
-                        <div class="col-12">
 
-                           <label for="hingga">PERANTI 1 (mb/s)</label>
- <input type="mula"  placeholder="Contoh : 10.16" class="form-control" value="<?= $d['notiket'] ?>" name="mula">
+<?php
+
+  for($i=1;$i<=3;$i++){
+    ?>
+                            <div class="col-12">
+                           <label for="hingga">PERANTI <?php echo $i; ?> (mb/s)</label>
+ <input type="text"  placeholder="Contoh : 10.16" class="form-control"  name="peranti[]">
                         </div>
+    <?php
+} ?>
 
-                         <div class="col-12">
+<?php
 
-                           <label for="hingga">PERANTI 2 (mb/s)</label>
- <input type="mula"  placeholder="Contoh : 10.16" class="form-control" value="<?= $d['notiket'] ?>" name="mula">
-                        </div>
+?>
 
 
-                         <div class="col-12">
 
-                           <label for="hingga">PERANTI 3 (mb/s)</label>
- <input type="mula"  placeholder="Contoh : 10.16" class="form-control" value="<?= $d['notiket'] ?>" name="mula">
-                        </div>
+
                     </div>
 
                      

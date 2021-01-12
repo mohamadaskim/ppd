@@ -9,8 +9,11 @@ $sect = $kuri->fetchAll(PDO::FETCH_COLUMN);
             <i class="fa fa-envelope" aria-hidden="true"></i>
             <span>DASHBOARD </span>
         </a>
-        <a href="/ppdkluang/cpanel/sekolah/penilaian/?view=telahbaca" class="list-group-item list-group-item-action <?= ($view=='telahbaca'?'active-oren':'') ?>">
-            <i class="fa fa-envelope-open" aria-hidden="true"></i> TAMBAH PENILAIAN
+        <a href="/ppdkluang/cpanel/sekolah/penilaian/edit.php?kat=1" class="list-group-item list-group-item-action <?= ($view=='telahbaca'?'active-oren':'') ?>">
+            <i class="fa fa-envelope-open" aria  -hidden="true"></i> NILAI KEBERSIHAN
+        </a>
+                <a href="/ppdkluang/cpanel/sekolah/penilaian/edit.php?kat=2" class="list-group-item list-group-item-action <?= ($view=='telahbaca'?'active-oren':'') ?>">
+            <i class="fa fa-envelope-open" aria  -hidden="true"></i> NILAI KESELAMATAN
         </a>
         <a href="/ppdkluang/cpanel/sekolah/penilaian/?view=pkp" class="list-group-item list-group-item-action <?= ($view=='pkp'?'active-oren':'') ?>">
             <i class="fa fa-ban" aria-hidden="true"></i> SENARAI PENILAIAN

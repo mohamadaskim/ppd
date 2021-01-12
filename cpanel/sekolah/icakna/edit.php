@@ -82,7 +82,7 @@ $page = "?page=".$_GET['page'];
 
                         <div class="col-12">
                             <label for="mula">NAMA GURU/PEGAWAI</label>
-                            <input type="mula" class="form-control" value="<?= $d['nama'] ?>" name="nama">
+                            <input type="text" class="form-control" value="<?= $d['nama'] ?>" name="nama">
                         </div>
 
 

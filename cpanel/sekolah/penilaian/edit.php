@@ -45,40 +45,69 @@ $page = "?page=".$_GET['page'];
     <img src="/ppdkluang/cpanel/img/toptitle.png" alt="Top Title" class="w-100">
     <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">PENILAIAN SYARIKAT <br>(KEBERSIHAN DAN KESELAMATAN)</h3>
     <div class="row mt-3">
-        <div class="col-12 col-md-3 order-last order-md-first mt-3 mt-md-0">
-            <div class="sticky-filter">
-                <?php include 'proc/side-menu.php'; ?>
-            </div>
-        </div>
+
         <div class="col col-md order-first order-md-last">
 
+
+
+
                 <form class="card-body form-ada-proses" id="form" action="/ppdkluang/cpanel/sekolah/penilaian/proc/isi.php" method="GET">
-<input type="hidden" name=page value="<?= $_GET['page'] ?>">
+<!--<input type="hidden" name=page value="<?= $_GET['page'] ?>">
 <input type="hidden" name=view value="<?= $_GET['view'] ?>">
-
-
+-->
+<!--<form>
 <div class="form-group form-row">
 
                         <div class="col-6">
                             <label for="hingga">KATEGORI DINILAI</label>
- <select  name="kat" id="kat" class="form-control">
+ <select  name="kat" id="kat" class="form-control" onchange='this.form.submit()'>
 <option value= >Pilih Syarikat</option>
 <option value=1 >KEBERSIHAN</option>
 <option value=2 >KESELAMATAN</option>
                         </select>
                         </div>
+
+
        </div>
+</form>-->
 
+<div class="form-group form-row">
+                        <div class="col-12">
+                            <label for="hingga">NAMA SYARIKAT</label>
+<input type="text" class="form-control" name='syarikat' >
+                        </div>
+                        <div class="col-6">
+                            <label for="hingga">MULA KONTRAK</label>
+<input type="date" class="form-control" name='tempoh_mula' >
+                        </div>
 
+                        <div class="col-6">
+                            <label for="hingga">TAMAT KONTRAK</label>
+<input type="date" class="form-control" name='tempoh_tamat' >
+                        </div>
 
+                        <div class="col-6">
+                            <label for="hingga">TARIKH PENILAIAN</label>
+<input type="date" class="form-control" name='tarikh' >
+                        </div>
 
-<table class="table table-striped my-lh-1 text-center mb-0">
+                        <div class="col-6">
+                            <label for="hingga">ENROLMEN MURID SEMASA</label>
+<input type="text" class="form-control" name='enrolmen' >
+                        </div>
+                                                <div class="col-6">
+                            <label for="hingga">ENROLMEN MURID SEMASA</label>
+<input type="text" class="form-control" name='zon' >
+                        </div>
+
+       </div>
+                        <br>
+<table class="table table-striped my-lh-1 text-center mb-0" >
             <thead class="bg-warning text-light">
                 <tr>
                     <th rowspan="2" class="d-none d-md-table-cell">#</th>
                     <th rowspan="2">PERKARA</th>
                     <th colspan=5>SKOR PENILAIAN</th>
-
                 </tr>
                 <tr>
 
@@ -98,8 +127,10 @@ $page = "?page=".$_GET['page'];
 $x++;
                     $tajuk = htmlspecialchars($s['tajuk']);
                     $radio = htmlspecialchars($s['radio']);
+
 $name = htmlspecialchars($s['ID']);
 $data = htmlspecialchars($s['data']);
+$dataid=$x;
                     include 'proc/kad-style.php';
 
                 } ?>
@@ -118,23 +149,23 @@ $data = htmlspecialchars($s['data']);
                     <div class="text-center">
                     <a href="/ppdkluang/cpanel/sekolah/ict/<?php echo $view.$page; ?>"  ><button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> KEMBALI</button></a>    
 
- <button  type="submit" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN</button>
+ <button  type="submit" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN & CETAK</button>
+
+</form>
+
+
+
+
+                 
 
 
 
 
 
 
-                    </div>
 
 
-
-
-
-
-
-
-                </form>
+                </div>
 
         </div>
     </div>

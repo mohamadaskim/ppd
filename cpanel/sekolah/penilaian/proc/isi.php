@@ -5,31 +5,67 @@ require($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/proc/auth.php");
 
 
 if(isset($_GET['kemaskini'])){
- foreach($_GET['data'] as $s){
 
-echo $_GET['data'][2];
+$syarikat=$_GET['syarikat'];
+$tempoh_mula=$_GET['tempoh_mula'];
+$tempoh_tamat=$_GET['tempoh_tamat'];
+$enrolmen=$_GET['enrolmen'];
+$zon=$_GET['zon'];
+$sql = "INSERT INTO `penilaian_bulan`( `kodsekolah`, `tarikh`, `syarikat`, `tempoh_mula`, `tempoh_tamat`, `murid`, `zon`) VALUES (?,'$_GET[tarikh]', ?,?,?,?,?)";
+$kuri = $PPD->prepare($sql);
+$kuri->execute([USER,$syarikat,$tempoh_mula,$tempoh_tamat,$enrolmen,$zon]);
+$id = $PPD->lastInsertId();
+
+    $x=0;
+    $insert='';
+ foreach($_GET['data'] as $s){
+$x++;
+//echo $x.'-'.$_GET['data'][$x].'- data-'.$s.'<br>';
+$insert.= '("'.USER.'",'.$id.','.$_GET['dataid'][$x].',"'.$s.'"),';
  }
 
-$page = "?page=".$_POST['page'];
-    $kuri = $PPD->prepare("UPDATE sts2020 SET kewpa=?,tahunperolehan=?,lokasi=?,keterangan=?,kerosakkan=?,jenama=?,model=? WHERE id = ? AND kodsekolah = ?");
-    if($kuri->execute([$kewpa,$tahunperolehan,$lokasi,$keterangan,$kerosakkan,$jenama,$model,$id,USER])){
-        $a = explode('/',$_POST['mula']);
+ $insert=rtrim($insert,',');
+//echo $insert.'<br>';
 
-$kuri = $PPD->prepare("INSERT INTO `sts_pengesah`(`id_rekod`, `kodsekolah`, `pegawai`, `jawatan`) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE pegawai=?,jawatan=? ");
-$kuri->execute([$id,USER,$pegawai,$jawatan,$pegawai,$jawatan]);
-        //header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
-?>
-<script>alert("Peralatan Dikemaskini");
-window.location.href='../<?php echo $view.$page; ?>';
+//$x=0;
+//$aktiviti_murid = [];
+            //    foreach($_GET['data'] as $key => $value)
+             //   {
+              //      $x++;
+               //     $aktiviti_murid[] = [
+               //         'kodsekolah' => USER,
+
+               //     ];
+              //  }
+
+//echo json_encode($aktiviti_murid);
+
+
+
+$sql = "INSERT INTO penilaian_data ( `kodsekolah`, `data_id`,`perkara_id`, `value`) VALUES ".$insert;
+
+
+
+    $kuri = $PPD->prepare($sql);
+
+    //$kuri->bindValue(':kodsekolah', USER);
+    if($kuri->execute()){
+        ?>
+<script>alert("Penilaian Telah Direkod");
+window.location.href='../index.php';
 </script>
 
 <?php
+        if(isset($_GET['bulan'])){
+            //header('Location: ../senarai.php?bulan='.$bulan.'&tahun='.$tahun);
+        } else {
+            //header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
+        }
         exit();
     } else {
-        header('Location: ../.');
+       // header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
         exit();
     }
-
 }
 
 if(isset($_GET['buang'])){

@@ -58,8 +58,8 @@ $page = "?page=".$_POST['page'];
     $kuri = $PPD->prepare("INSERT INTO `icakna_senarai`(`kodsekolah`, `nama`, `kreteria`, `kategori`, `keterangan`, `isu`, `tindakan`, `pengisi`) VALUES (?,?,?,?,?,?,?,?)");
     if($kuri->execute([USER,$nama,$krateria,$kat,$keterangan,$isu,$tindakan,$pengisi])){
         ?>
-<script>alert("Pendaftaran Telah Direkod");
-window.location.href='../<?php echo $view.$page; ?>';
+<script>alert("Tambah senarai berjaya");
+window.location.href='../senarai.php';
 </script>
 
 <?php
@@ -69,7 +69,7 @@ window.location.href='../<?php echo $view.$page; ?>';
             //header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
         }
         exit();
-    } else {
+    }else {
        // header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
         exit();
     }
