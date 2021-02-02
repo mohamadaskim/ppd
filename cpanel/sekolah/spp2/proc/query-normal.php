@@ -1,5 +1,5 @@
 <?php
-$kuri = $PPD->prepare("SELECT * FROM `icakna_senarai` s where s.kodsekolah=? LIMIT 20 OFFSET {$offset}");
+$kuri = $PPD->prepare("SELECT * FROM `spp` s left join sts_jawatan j on j.kod=s.jawatan  where s.kodsekolah=? order by tarikh");
 $kuri->execute([USER]);
 $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
 

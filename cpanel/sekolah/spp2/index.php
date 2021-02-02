@@ -52,11 +52,13 @@
     
     $jumpage = ceil($kaun/10);
 
-    $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM muatturun_analisis
-                            INNER JOIN muatturun ON muatturun_analisis.idsurat = muatturun.id
-                            WHERE muatturun_analisis.kodsekolah = ? AND muatturun_analisis.baca = 0 AND muatturun.publish = 1");
-    $kuri->execute([USER]);
-    $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
+$kuri = $PPD->prepare("SELECT * FROM `spp_isp` where KODSEKOLAH='JBD2048' ");
+$kuri->execute([USER]);
+//$surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
+ $d = $kuri->fetch(PDO::FETCH_ASSOC);
+$_SESSION['talian']=$d['TALIAN'];
+
+
 ?>
 
 
@@ -146,7 +148,14 @@
         })
     </script>
 
+<?php function get_bulan($PPD,$bulan,$peranti){
 
+    $kuri = $PPD->prepare("SELECT `$peranti` AS bil FROM spp WHERE KODSEKOLAH = ? and MONTH(tarikh)=$bulan");
+    $kuri->execute([USER]);
+    $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
+return $xbaca;
+}
+?>
 <script>
         var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         var color = Chart.helpers.color;
@@ -158,13 +167,13 @@
                 borderColor: window.chartColors.green,
                 borderWidth: 1,
                 data: [
-                    95,
-                    95,
-                    96,
-                    82,
-                    1,
-                    5,
-                    3
+                    <?php echo get_bulan($PPD,1,'v1'); ?>,
+                    <?php echo get_bulan($PPD,2,'v1'); ?>,
+                    <?php echo get_bulan($PPD,3,'v1'); ?>,
+                    <?php echo get_bulan($PPD,4,'v1'); ?>,
+                    <?php echo get_bulan($PPD,5,'v1'); ?>,
+                    <?php echo get_bulan($PPD,6,'v1'); ?>,
+                    <?php echo get_bulan($PPD,7,'v1'); ?>
                 ]
             }, {
                 label: 'PERANTI 2',
@@ -172,13 +181,13 @@
                 borderColor: window.chartColors.blue,
                 borderWidth: 1,
                 data: [
-                      65,
-                    15,
-                    26,
-                    12,
-                    55,
-                    52,
-                    31
+                    <?php echo get_bulan($PPD,1,'v2'); ?>,
+                    <?php echo get_bulan($PPD,2,'v2'); ?>,
+                    <?php echo get_bulan($PPD,3,'v2'); ?>,
+                    <?php echo get_bulan($PPD,4,'v2'); ?>,
+                    <?php echo get_bulan($PPD,5,'v2'); ?>,
+                    <?php echo get_bulan($PPD,6,'v2'); ?>,
+                    <?php echo get_bulan($PPD,7,'v2'); ?>
                 ]
             }, {
                 label: 'PERANTI 3',
@@ -186,13 +195,13 @@
                 borderColor: window.chartColors.red,
                 borderWidth: 1,
                 data: [
-                      65,
-                    15,
-                    26,
-                    12,
-                    55,
-                    52,
-                    31
+                    <?php echo get_bulan($PPD,1,'v3'); ?>,
+                    <?php echo get_bulan($PPD,2,'v3'); ?>,
+                    <?php echo get_bulan($PPD,3,'v3'); ?>,
+                    <?php echo get_bulan($PPD,4,'v3'); ?>,
+                    <?php echo get_bulan($PPD,5,'v3'); ?>,
+                    <?php echo get_bulan($PPD,6,'v3'); ?>,
+                    <?php echo get_bulan($PPD,7,'v3'); ?>
                 ]
             }]
 
@@ -205,6 +214,15 @@
                 data: barChartData,
                 options: {
                     responsive: true,
+                        scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      ]
+    },
                     legend: {
                         position: 'top',
                     },

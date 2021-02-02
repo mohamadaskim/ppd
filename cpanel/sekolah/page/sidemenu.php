@@ -39,6 +39,11 @@ $menu = $kuri->fetchAll(PDO::FETCH_ASSOC);
             <div class="menu-besau"><i class="fa fa-envelope-o" aria-hidden="true"></i>spp2</div>
         </a>
     </div>
+            <div>
+        <a href="../penarafan" class="btn-collapse <?= ($page=='inbox'?'btn-sidemenu-active':'') ?>">
+            <div class="menu-besau"><i class="fa fa-envelope-o" aria-hidden="true"></i>penarafan</div>
+        </a>
+    </div>
 </div>
 <div class="text-orange pl-4 menu-header mt-2">PAUTAN</div>
 <div id="menu-panel">

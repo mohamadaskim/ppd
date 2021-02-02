@@ -46,30 +46,62 @@ if(isset($_POST['second'])){
 
 if(isset($_POST['simpan'])){
 
+$tarikh = $_POST['tarikh'];
+$jawatan = $_POST['jawatan'];
 
     $x=0;
-    $insert='';
+$v='("'.USER.'","'.$tarikh.'",'.$jawatan.',';
+    
  foreach($_POST['peranti'] as $s){
 
 //echo $x.'-'.$_GET['data'][$x].'- data-'.$s.'<br>';
-$insert.= '("'.USER.'",'.$x.',"'.$s.'"),';
+$v.= '"'.$s.'","'.$_POST['catatan'][$x].'",';
 $x++;
  }
 
- $insert=rtrim($insert,',');
-echo $insert;
 
-$bulan = $_POST['bulan'];
-$jawatan = $_POST['jawatan'];
-$peranti1 = $_POST['peranti1'];
-$peranti2 = $_POST['peranti2'];
-$page = "?page=".$_POST['page'];
-$kuri = $PPD->prepare("INSERT INTO `spp`( `kodsekolah`, `tarikh`, `catatan`) VALUES ( ?, ?, ?)");
-$kuri->execute([USER,$bulan,$jawatan]);
 
-    header('Location: ../.');
+$i=0;
+$feild='(`kodsekolah`,`tarikh`,`jawatan`,';
+ foreach($_POST['peranti'] as $s){
+$i++;
+//echo $x.'-'.$_GET['data'][$x].'- data-'.$s.'<br>';
+$feild.= '`v'.$i.'`,`catatan'.$i.'`,';
 
-    
+ }
+
+$feild=rtrim($feild,',');
+$feild.= ')';
+
+ $v=rtrim($v,',');
+$v.= ')';
+
+//echo $feild;
+//echo "<br>";
+//echo $v;
+
+$sql="INSERT INTO `spp` ".$feild." values ".$v."";
+//echo $sql;
+//$page = "?page=".$_POST['page'];
+$kuri = $PPD->prepare($sql);
+    if($kuri->execute([])){
+        ?>
+<script>alert("Direkod");
+window.location.href='../senarai.php';
+</script>
+
+<?php
+        if(isset($_GET['bulan'])){
+            //header('Location: ../senarai.php?bulan='.$bulan.'&tahun='.$tahun);
+        } else {
+            //header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
+        }
+        exit();
+    } else {
+       // header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
+        exit();
+    }
+
 }
 
 
@@ -78,26 +110,57 @@ if(isset($_POST['kemaskini'])){
 
 
 
+$id = $_POST['kemaskini'];
+
+$tarikh = $_POST['tarikh'];
+$jawatan = $_POST['jawatan'];
 
 
 
-    $kuri = $PPD->prepare("UPDATE sts2020 SET kewpa=?,tahunperolehan=?,lokasi=?,keterangan=?,kerosakkan=?,jenama=?,model=? WHERE id = ? AND kodsekolah = ?");
-    if($kuri->execute([$kewpa,$tahunperolehan,$lokasi,$keterangan,$kerosakkan,$jenama,$model,$id,USER])){
-        $a = explode('/',$_POST['mula']);
 
-$kuri = $PPD->prepare("INSERT INTO `sts_pengesah`(`id_rekod`, `kodsekolah`, `pegawai`, `jawatan`) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE pegawai=?,jawatan=? ");
-$kuri->execute([$id,USER,$pegawai,$jawatan,$pegawai,$jawatan]);
-        //header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
-?>
 
+$ufeild=' tarikh = "'.$tarikh.'",jawatan='.$jawatan.', ' ;
+$i=0;
+$x=0;
+ foreach($_POST['peranti'] as $s){
+$i++;
+//echo $x.'-'.$_GET['data'][$x].'- data-'.$s.'<br>';
+$ufeild.= '`v'.$i.'`='.$s.',`catatan'.$i.'`="'.$_POST['catatan'][$x].'",';
+$x++;
+ }
+
+
+$ufeild=rtrim($ufeild,',');
+$ufeild.= '';
+
+
+//echo $ufeild;
+//echo "<br>";
+//echo $v;
+
+$sql="UPDATE `spp` SET  ".$ufeild." WHERE kodsekolah=? and id=?";
+//echo $sql;
+//$page = "?page=".$_POST['page'];
+$kuri = $PPD->prepare($sql);
+
+    if($kuri->execute([USER,$id])){
+        ?>
+<script>alert("Direkod");
+window.location.href='../senarai.php';
+</script>
 
 <?php
+        if(isset($_GET['bulan'])){
+            //header('Location: ../senarai.php?bulan='.$bulan.'&tahun='.$tahun);
+        } else {
+            //header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
+        }
         exit();
     } else {
-        header('Location: ../.');
+       // header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
         exit();
     }
-    
+
 }
 
 if(isset($_GET['buang'])){
@@ -107,11 +170,11 @@ if(isset($_GET['buang'])){
     $view = $_GET['view'];
 $page = "?page=".$_GET['page'];
 
-    $kuri = $PPD->prepare("UPDATE sts2020 SET status=1 WHERE id = ? AND kodsekolah = ?");
+    $kuri = $PPD->prepare("DELETE FROM `spp` WHERE id = ? AND kodsekolah = ?");
     if($kuri->execute([$id,USER])){
         ?>
-<script>alert("Peralatan Dipadam");
-window.location.href='../<?php echo $view.$page; ?>';
+<script>alert("Rekod dipadam");
+window.location.href='../senarai.php';
 </script>
 
 <?php

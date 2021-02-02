@@ -3,27 +3,30 @@
     $page = 'inbox';
     include($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/sekolah/header.php");
 
-$s_pengesah=$_SESSION['PENGESAH'];
-$s_pengesahj=$_SESSION['PENGESAHJ'];
+//$s_pengesah=$_SESSION['PENGESAH'];
+//$s_pengesahj=$_SESSION['PENGESAHJ'];
     if(!isset($_GET['id'])){
        // header('Location: senarai.php');
        // exit();
     }
-
+if(isset($_GET['id'])){
     $id = htmlspecialchars($_GET['id']);
 
-    $kuri = $PPD->prepare("SELECT * FROM sts2020 s left join sts_pengesah p on p.id_rekod=s.ID WHERE id = ? LIMIT 1");
-    $kuri->execute([$id]);
+    $kuri = $PPD->prepare("SELECT s.* FROM `spp` s left join sts_jawatan j on j.kod=s.jawatan WHERE s.ID = ? and s.kodsekolah = ? LIMIT 1");
+    $kuri->execute([$id,USER]);
  $d = $kuri->fetch(PDO::FETCH_ASSOC);
 
+    $view = $_GET['view'];
+$page = "?page=".$_GET['page'];
+
+}
     $kuri = $PPD->query("SELECT * FROM `spp_bulan`");
     $kenya = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
 
     $kuri = $PPD->query("SELECT * FROM sts_jawatan ");
     $keny = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
 
-    $view = $_GET['view'];
-$page = "?page=".$_GET['page'];
+
 
 
 ?>
@@ -33,7 +36,7 @@ $page = "?page=".$_GET['page'];
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Scriptable &gt; Line | Chart.js sample</title>
+    <title></title>
 
     <script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="https://www.chartjs.org/dist/2.9.4/Chart.min.js"></script>
     <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
@@ -79,7 +82,7 @@ $page = "?page=".$_GET['page'];
 
                         <div class="col-6">
                             <label for="hingga">TARIKH</label>
-<input type="date" class="form-control" name='tarikh' >
+<input type="date" required class="form-control" name='tarikh' value="<?= $d['tarikh'] ?>">
                         </div>
 
 
@@ -104,16 +107,23 @@ $page = "?page=".$_GET['page'];
                     </div>
 
 
-                    <div class="form-group">
-                        <label for="tajuk">SENARAI PERANTI</label>
+                    <div class="form-group  form-row">
+                       
 
 <?php
 
-  for($i=1;$i<=3;$i++){
+  for($i=1;$i<=$_SESSION['talian'];$i++){
     ?>
-                            <div class="col-12">
+                            <div class="col-4">
                            <label for="hingga">PERANTI <?php echo $i; ?> (mb/s)</label>
- <input type="text"  placeholder="Contoh : 10.16" class="form-control"  name="peranti[]">
+ <input type="text"  placeholder="Contoh : 10.16" class="form-control"  name="peranti[]" value="<?php if(isset($d['v'.$i])) echo $d['v'.$i]; ?>">
+
+                        </div>
+                         <div class="col-8">
+
+                        <label for="tajuk">CATATAN</label>
+                        <textarea   name="catatan[]" rows="2" class="form-control"><?php if(isset($d['catatan'.$i])) echo $d['catatan'.$i]; ?></textarea>
+
                         </div>
     <?php
 } ?>
@@ -127,13 +137,22 @@ $page = "?page=".$_GET['page'];
 
                     </div>
 
-                     
+                    <div class="form-group">
+
+                    </div> 
 
 
                     <div class="text-center">
    
                 
- <button type="submit"  class="btn btn-success" name="simpan"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN</button>
+
+                        <?php if(isset($id)){ ?> <button type="submit"  class="btn btn-success" name="kemaskini" value="<?php echo $id; ?>"><i class="fa fa-pencil" aria-hidden="true"></i> KEMASKINI</button> 
+                        <a  class="btn btn-danger" href="proc/isi.php?buang=<?php echo $id; ?>" >
+                    
+                                <i class="fa fa-pencil" ></i> PADAM
+            
+                        </a>
+                    <?php } else { ?>  <button type="submit"  class="btn btn-success" name="simpan"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN dan CETAK</button><?php } ?>
 
 
 <script>

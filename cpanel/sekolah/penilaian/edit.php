@@ -4,15 +4,27 @@
     include($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/sekolah/header.php");
 
 
-    $id = htmlspecialchars($_GET['id']);
+   // $id = htmlspecialchars($_GET['id']);
 
 
-include 'proc/query-normal.php';
+//include 'proc/query-normal.php';
+$kat=1;
+if(isset($_GET['kat'])) $kat=$_GET['kat'];
+$sql="SELECT * FROM `penilaian_perkara` where kategori=$kat";
+if(isset($_GET['id'])) $sql="SELECT * FROM `penilaian_perkara` p inner join `penilaian_data` d on d.perkara_id=p.ID WHERE kodsekolah=? and `data_id` ='$_GET[id]'";
+$kuri = $PPD->prepare($sql);
+$kuri->execute([USER]);
+$surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
 
-
-    $kuri = $PPD->prepare("SELECT * FROM sts2020 s left join sts_pengesah p on p.id_rekod=s.ID WHERE id = ? LIMIT 1");
-    $kuri->execute([$id]);
+    $kuri = $PPD->prepare("SELECT * FROM `penilaian_bulan`  WHERE kodsekolah = ? and kategori = ?order by ID desc LIMIT 1 ");
+    $kuri->execute([USER,$_GET['kat']]);
  $d = $kuri->fetch(PDO::FETCH_ASSOC);
+
+  //  $kuri = $PPD->prepare("SELECT * FROM `penilaian_perkara` p inner join `penilaian_data` d on d.perkara_id=p.ID WHERE kodsekolah='JBD2047' and `data_id` = 7");
+  //  $kuri->execute([USER,$d['ID']]);
+ //$dedit= $kuri->fetch(PDO::FETCH_ASSOC);
+
+
 
     $kuri = $PPD->query("SELECT kategori,kategori FROM `sts2020` group by kategori");
     $kenya = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
@@ -20,8 +32,45 @@ include 'proc/query-normal.php';
     $kuri = $PPD->query("SELECT * FROM sts_jawatan ");
     $keny = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
 
-    $view = $_GET['view'];
-$page = "?page=".$_GET['page'];
+  //  $view = $_GET['view'];
+//$page = "?page=".$_GET['page'];
+
+
+
+function option1($id){
+
+
+$dat="";
+$dat.= '  <option>Sila Pilih</option>';
+$dat.= '  <option ';
+if($id=='1') $dat.= ' selected=selected ';
+$dat.= ' value="1" ';
+$dat.= '>Ada</option>';
+$dat.= '  <option ';
+if($id=='0') $dat.= ' selected=selected ';
+$dat.= ' value="0" ';
+$dat.= '>Tiada</option>';
+
+
+return $dat;
+}
+
+function option2($id){
+
+$dat="";
+$dat.= '  <option>Sila Pilih</option>';
+$dat.= '  <option ';
+if($id=='1') $dat.= ' selected=selected ';
+$dat.= ' value="1" ';
+$dat.= '>Perkhidmatan diteruskan</option>';
+$dat.= '  <option ';
+if($id=='0') $dat.= ' selected=selected ';
+$dat.= ' value="0" ';
+$dat.= '>Perkhidmatan ditamatkan</option>';
+
+return $dat;
+
+}
 
 
 ?>
@@ -31,7 +80,7 @@ $page = "?page=".$_GET['page'];
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Scriptable &gt; Line | Chart.js sample</title>
+    <title></title>
 
     <script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="https://www.chartjs.org/dist/2.9.4/Chart.min.js"></script>
     <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
@@ -52,8 +101,8 @@ $page = "?page=".$_GET['page'];
 
 
                 <form class="card-body form-ada-proses" id="form" action="/ppdkluang/cpanel/sekolah/penilaian/proc/isi.php" method="GET">
-<!--<input type="hidden" name=page value="<?= $_GET['page'] ?>">
-<input type="hidden" name=view value="<?= $_GET['view'] ?>">
+<input type="hidden" name=kat value="<?= $_GET['kat'] ?>">
+<!--<input type="hidden" name=view value="<?= $_GET['view'] ?>">
 -->
 <!--<form>
 <div class="form-group form-row">
@@ -72,32 +121,36 @@ $page = "?page=".$_GET['page'];
 </form>-->
 
 <div class="form-group form-row">
+
+                        <div class="col-12">
+                            <label for="hingga">TARIKH PENILAIAN</label>
+<input type="date" required class="form-control" name='tarikh' value="<?php echo date("Y-m-d"); ?>" >
+                        </div>
+
+
                         <div class="col-12">
                             <label for="hingga">NAMA SYARIKAT</label>
-<input type="text" class="form-control" name='syarikat' >
+<input type="text" required class="form-control" name='syarikat' value="<?php if(isset($d['syarikat'])) echo $d['syarikat']; ?>">
                         </div>
                         <div class="col-6">
                             <label for="hingga">MULA KONTRAK</label>
-<input type="date" class="form-control" name='tempoh_mula' >
+<input type="date" required class="form-control" name='tempoh_mula' value="<?php if(isset($d['tempoh_mula'])) echo $d['tempoh_mula']; ?>" >
                         </div>
 
                         <div class="col-6">
                             <label for="hingga">TAMAT KONTRAK</label>
-<input type="date" class="form-control" name='tempoh_tamat' >
+<input type="date" required class="form-control" name='tempoh_tamat' value="<?php if(isset($d['tempoh_tamat'])) echo $d['tempoh_tamat']; ?>" >
                         </div>
 
-                        <div class="col-6">
-                            <label for="hingga">TARIKH PENILAIAN</label>
-<input type="date" class="form-control" name='tarikh' >
-                        </div>
+
 
                         <div class="col-6">
                             <label for="hingga">ENROLMEN MURID SEMASA</label>
-<input type="text" class="form-control" name='enrolmen' >
+<input type="text" required class="form-control" name='enrolmen' value="<?php if(isset($d['murid'])) echo $d['murid']; ?>" >
                         </div>
                                                 <div class="col-6">
-                            <label for="hingga">ENROLMEN MURID SEMASA</label>
-<input type="text" class="form-control" name='zon' >
+                            <label for="hingga">ZON </label>
+<input type="text" class="form-control" name='zon' value="<?php if(isset($d['zon'])) echo $d['zon']; ?>" >
                         </div>
 
        </div>
@@ -130,6 +183,10 @@ $x++;
 
 $name = htmlspecialchars($s['ID']);
 $data = htmlspecialchars($s['data']);
+if(isset($s['value']))
+{$datavalue = htmlspecialchars($s['value']);
+$dataulasan = htmlspecialchars($s['ulasan']);
+}
 $dataid=$x;
                     include 'proc/kad-style.php';
 

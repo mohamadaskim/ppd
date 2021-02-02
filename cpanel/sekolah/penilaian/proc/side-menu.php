@@ -15,7 +15,7 @@ $sect = $kuri->fetchAll(PDO::FETCH_COLUMN);
                 <a href="/ppdkluang/cpanel/sekolah/penilaian/edit.php?kat=2" class="list-group-item list-group-item-action <?= ($view=='telahbaca'?'active-oren':'') ?>">
             <i class="fa fa-envelope-open" aria  -hidden="true"></i> NILAI KESELAMATAN
         </a>
-        <a href="/ppdkluang/cpanel/sekolah/penilaian/?view=pkp" class="list-group-item list-group-item-action <?= ($view=='pkp'?'active-oren':'') ?>">
+        <a href="/ppdkluang/cpanel/sekolah/penilaian/senarai.php" class="list-group-item list-group-item-action <?= ($view=='pkp'?'active-oren':'') ?>">
             <i class="fa fa-ban" aria-hidden="true"></i> SENARAI PENILAIAN
         </a>
         

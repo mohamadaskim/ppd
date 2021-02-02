@@ -56,6 +56,12 @@
     $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM sts2020 WHERE kodsekolah = ? and status=0");
     $kuri->execute([USER]);
     $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
+
+//$m='08';
+$months = array (1=>'Januari',2=>'Februari',3=>'Mac',4=>'April',5=>'Mei',6=>'Jun',7=>'Julai',8=>'Ogos',9=>'September',10=>'Oktober',11=>'November',12=>'Disember');
+//echo $months[(int)$m];
+
+
 ?>
 
 
@@ -75,7 +81,7 @@
 
 <div class="main">
     <img src="/cpanel/img/toptitle.png" alt="Top Title" class="w-100">
-    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">SENARAI GURU/AKP YANG TELAH DIDAFTARKAN</h3>
+    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">SENARAI SIJIL PENGUJIAN DAN PENTAULIAHAN</h3>
     <div class="row mt-3">
         <div class="col-12 col-md-3 order-last order-md-first mt-3 mt-md-0">
             <div class="sticky-filter">
@@ -89,9 +95,9 @@
                 <tr>
                     <th class="d-none d-md-table-cell">#</th>
                     <th>TARIKH LAPOR</th>
-                    <th>NAMA PEGAWAI</th>
-                    <th>KRETERIA</th>
-                    <th>TINDAKAN</th>
+                    <th>BULAN</th>
+                    <th>PEGAWAI</th>
+                    <th>MAKLUMAT</th>
                     <th style="width:5%">KEMASKINI</th>
                 </tr>
             </thead>
@@ -100,12 +106,15 @@
          $x=$offset;
                 foreach($surat as $s){
 $x++;
-                    $id = htmlspecialchars($s['ID']);
-                    $kewpa = htmlspecialchars($s['nama']);
-                    $kategori = htmlspecialchars($s['kategori']);
-                    $tahunperolehan = htmlspecialchars($s['tindakan']);
+                    $id = htmlspecialchars($s['id']);
+                    $bulan = $months[(int)date("m", strtotime(htmlspecialchars($s['tarikh'])))];
+                    $tahun = date("Y", strtotime(htmlspecialchars($s['tarikh'])));
+
+                    $asas="P1:[".$s['v1']. "] ";
+                    if($s['v2']!='') $asas.=" , P2:[".$s['v2']. "] ";
+                    if($s['v3']!='') $asas.=" , P3:[".$s['v3']. "] ";
                    $tarikh = date('d/m/Y',strtotime($s['tarikh']));
-                   $sahkan = htmlspecialchars($s['pegawai']);
+                   $jawatan = htmlspecialchars($s['jawatan']);
                     $urla = htmlspecialchars (basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']));
 
                     include 'proc/kad-style.php';

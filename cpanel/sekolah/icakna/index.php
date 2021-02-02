@@ -20,12 +20,16 @@ $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
     $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM icakna_senarai s  WHERE s.kodsekolah = ? ");
     $kuri->execute([USER]);
     $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
-?>
+    if(isset($_SESSION['KOD'])&&$_SESSION['KOD']==1){
 
-<script>
+    }
+    else
+    {
+   ?>
+   <script>
     var popup = prompt("Password Kaunseling Daerah : ");
     if(popup =='KOD'){
-
+<?php $_SESSION['KOD']=1; ?>
     }
     else
     {
@@ -35,6 +39,11 @@ window.location.href='../index.php';
 
     }
 </script>
+   <?php     
+    }
+?>
+
+
 
 <head>
     <meta charset="utf-8">
