@@ -105,11 +105,16 @@ $months = array (1=>'Januari',2=>'Februari',3=>'Mac',4=>'April',5=>'Mei',6=>'Jun
 <?php
 
 function get_status($PPD,$bulan,$tahun,$kat){
+
+    if($kat==1) $file="cetak.php";
+     if($kat==2) $file="cetak2.php";
           $kuri = $PPD->prepare("SELECT DATE_FORMAT(tarikh, '%d/%m/%Y') tarikh,ID FROM `penilaian_bulan` s where s.kodsekolah=? and kategori=? and YEAR(tarikh)=? and month(tarikh)=?");
+
+
     $kuri->execute([USER,$kat,$tahun,$bulan]);
     $dat=$kuri->fetch(PDO::FETCH_ASSOC);
 //$nilai= (int)$dat['bil'];
-    if($dat['tarikh']=='') $ret=' <a  class=" btn btn-sm btn-danger"><i class="fa fa-times " aria-hidden="true"></i></a>'; else $ret=' <a href="edit.php?id='.$dat['ID'].'&kat='.$kat.'" class=" btn btn-sm btn-success"><i class="fa fa-check " aria-hidden="true"></i>Cetak</a>';
+    if($dat['tarikh']=='') $ret=' <a  class=" btn btn-sm btn-info">Tiada</a>'; else $ret='<a style="display: inline;" href="'.$file.'?id='.$dat['ID'].'&kat='.$kat.'" class=" btn btn-block btn-sm btn-success"><i class="fa fa-print" aria-hidden="true"></i></a><a style="display: inline;" href="/ppdkluang/cpanel/sekolah/penilaian/proc/isi.php?buang='.$dat['ID'].'&kat='.$kat.'" class=" btn btn-block btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>';
 return $ret;
 //$total=ceil(($nilai / 7)*100);
   //  return $jumlah;  

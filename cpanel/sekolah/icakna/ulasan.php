@@ -116,9 +116,9 @@ $page = "?page=".$_GET['page'];
    ?>   
 
                     <div class="text-center">
-                    <a href="/ppdkluang/cpanel/sekolah/icakna/<?php echo $view.$page; ?>"  ><button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> BATAL</button></a>    
-    <a href=""  data-toggle="modal" data-target="#modalRegisterForm">     </a>                
- <button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> DAFTAR</button>
+                       
+                
+ <button   class="btn btn-success" name="ulasan"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN ULASAN</button>
 
 
 <script>

@@ -66,7 +66,7 @@ $_SESSION['talian']=$d['TALIAN'];
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Scriptable &gt; Line | Chart.js sample</title>
+    <title></title>
 
     <script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="https://www.chartjs.org/dist/2.9.4/Chart.min.js"></script>
     <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
@@ -228,7 +228,7 @@ return $xbaca;
                     },
                     title: {
                         display: true,
-                        text: 'GRAF'
+                        text: 'GRAF PERANTI BAGI KELAJUAN DOWNLOAD'
                     }
                 }
             });

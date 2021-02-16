@@ -126,14 +126,14 @@ function NbLines($w,$txt)
  {
     // Position at 1.5 cm from bottom
     
-    $this->SetY(-15);
+    //$this->SetY(-15);
     
     // Arial italic 8
-    $this->SetFont('Arial','B',12);
+   // $this->SetFont('Arial','B',12);
     // Page number
     
-    $this->Cell(180,15,''.$this->PageNo(),0,0,'R');
-       $this->Image('../fpdf/footer.png',20,280,170,5);
+   // $this->Cell(180,15,''.$this->PageNo(),0,0,'R');
+     //  $this->Image('../fpdf/footer.png',20,280,170,5);
        
  }
 

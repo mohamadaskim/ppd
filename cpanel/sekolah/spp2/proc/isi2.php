@@ -43,23 +43,46 @@ if(isset($_POST['second'])){
     exit();
 }
 
+
+
+
+
 if(isset($_POST['kemaskini'])){
 
-    $id = $_POST['id'];
-$krateria = $_POST['krateria'];
-$kat = $_POST['kat'];
-$nama = $_POST['nama'];
-$keterangan = $_POST['keterangan'];
-$isu = $_POST['isu'];
-$tindakan = $_POST['tindakan'];
-$pengisi = $_POST['pengisi'];
 
-$page = "?page=".$_POST['page'];
-    $kuri = $PPD->prepare("INSERT INTO `icakna_senarai`(`kodsekolah`, `nama`, `kreteria`, `kategori`, `keterangan`, `isu`, `tindakan`, `pengisi`) VALUES (?,?,?,?,?,?,?,?)");
-    if($kuri->execute([USER,$nama,$krateria,$kat,$keterangan,$isu,$tindakan,$pengisi])){
+
+
+$id = $_POST['kemaskini'];
+
+$telco = $_POST['telco'];
+$peranti = $_POST['peranti'];
+$tarikh = $_POST['tarikh'];
+
+
+
+
+$ufeild=' ISP = "'.$telco.'",TALIAN='.$peranti.',tarikhpasang="'.$tarikh.'", kemaskini=1,' ;
+
+
+
+
+$ufeild=rtrim($ufeild,',');
+$ufeild.= '';
+
+
+//echo $ufeild;
+//echo "<br>";
+//echo $v;
+
+$sql="UPDATE `spp_isp` SET  ".$ufeild." WHERE kodsekolah2=?";
+//echo $sql;
+//$page = "?page=".$_POST['page'];
+$kuri = $PPD->prepare($sql);
+
+    if($kuri->execute([USER])){
         ?>
-<script>alert("Tambah senarai berjaya");
-window.location.href='../senarai.php';
+<script>alert("Kemaskini Berjaya");
+window.location.href='../index.php';
 </script>
 
 <?php
@@ -69,49 +92,12 @@ window.location.href='../senarai.php';
             //header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
         }
         exit();
-    }else {
+    } else {
        // header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
         exit();
     }
-    
+
 }
-
-
-if(isset($_POST['ulasan'])){
-
-    $id = $_POST['id'];
-$krateria = $_POST['krateria'];
-$kat = $_POST['kat'];
-$nama = $_POST['nama'];
-$keterangan = $_POST['keterangan'];
-$isu = $_POST['isu'];
-$tindakan = $_POST['tindakan'];
-$pengisi = $_POST['pengisi'];
-
-$page = "?page=".$_POST['page'];
-    $kuri = $PPD->prepare("INSERT INTO `icakna_senarai`(`kodsekolah`, `nama`, `kreteria`, `kategori`, `keterangan`, `isu`, `tindakan`, `pengisi`) VALUES (?,?,?,?,?,?,?,?)");
-    if($kuri->execute([USER,$nama,$krateria,$kat,$keterangan,$isu,$tindakan,$pengisi])){
-        ?>
-<script>alert("Tambah senarai berjaya");
-window.location.href='../senarai.php';
-</script>
-
-<?php
-        if(isset($_GET['bulan'])){
-            //header('Location: ../senarai.php?bulan='.$bulan.'&tahun='.$tahun);
-        } else {
-            //header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
-        }
-        exit();
-    }else {
-       // header('Location: ../senarai.php?bulan='.$a[1].'&tahun='.$a[2]);
-        exit();
-    }
-    
-}
-
-
-
 
 if(isset($_GET['buang'])){
     $id = $_GET['buang'];
@@ -120,11 +106,11 @@ if(isset($_GET['buang'])){
     $view = $_GET['view'];
 $page = "?page=".$_GET['page'];
 
-    $kuri = $PPD->prepare("DELETE from icakna_senarai  WHERE id = ? AND kodsekolah = ?");
+    $kuri = $PPD->prepare("DELETE FROM `spp` WHERE id = ? AND kodsekolah = ?");
     if($kuri->execute([$id,USER])){
         ?>
-<script>alert("Peralatan Dipadam");
-window.location.href='../<?php echo $view.$page; ?>';
+<script>alert("Rekod dipadam");
+window.location.href='../senarai.php';
 </script>
 
 <?php

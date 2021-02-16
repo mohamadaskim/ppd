@@ -47,26 +47,40 @@ if(isset($_POST['second'])){
 if(isset($_POST['simpan'])){
 
 $tarikh = $_POST['tarikh'];
-$jawatan = $_POST['jawatan'];
+$ctarikh=$newDate = date("m", strtotime($tarikh));
+$ytarikh=$newDate = date("Y", strtotime($tarikh));
+    $kuri = $PPD->prepare("SELECT * FROM `spp` where year(tarikh)=? and month(tarikh)=? and kodsekolah = ?  LIMIT 1");
+    $kuri->execute([$ytarikh,$ctarikh,USER]);
+ $d = $kuri->fetch(PDO::FETCH_ASSOC);
+if($d['tarikh']!=''){
+            ?>
+<script>alert("Rekod Untuk Bulan Ni Telah Wujud, Sila Semak Senarai");
+window.location.href='../senarai.php';
+</script>
 
+<?php
+}
+
+$jawatan = $_POST['jawatan'];
+$namapegawai = htmlspecialchars($_POST['namapegawai']);
     $x=0;
-$v='("'.USER.'","'.$tarikh.'",'.$jawatan.',';
+$v='("'.USER.'","'.$tarikh.'",'.$jawatan.',"'.$namapegawai.'",';
     
  foreach($_POST['peranti'] as $s){
 
 //echo $x.'-'.$_GET['data'][$x].'- data-'.$s.'<br>';
-$v.= '"'.$s.'","'.$_POST['catatan'][$x].'",';
+$v.= '"'.$_POST['perantiu'][$x].'","'.$s.'","'.$_POST['catatan'][$x].'",';
 $x++;
  }
 
 
 
 $i=0;
-$feild='(`kodsekolah`,`tarikh`,`jawatan`,';
+$feild='(`kodsekolah`,`tarikh`,`jawatan`,`namapegawai`,';
  foreach($_POST['peranti'] as $s){
 $i++;
 //echo $x.'-'.$_GET['data'][$x].'- data-'.$s.'<br>';
-$feild.= '`v'.$i.'`,`catatan'.$i.'`,';
+$feild.= '`u'.$i.'`,`v'.$i.'`,`catatan'.$i.'`,';
 
  }
 
@@ -85,9 +99,11 @@ $sql="INSERT INTO `spp` ".$feild." values ".$v."";
 //$page = "?page=".$_POST['page'];
 $kuri = $PPD->prepare($sql);
     if($kuri->execute([])){
+$id = $PPD->lastInsertId();
+
         ?>
 <script>alert("Direkod");
-window.location.href='../senarai.php';
+window.location.href='../cetak.php?id=<?php echo $id; ?>';
 </script>
 
 <?php
@@ -114,18 +130,18 @@ $id = $_POST['kemaskini'];
 
 $tarikh = $_POST['tarikh'];
 $jawatan = $_POST['jawatan'];
+$namapegawai = htmlspecialchars($_POST['namapegawai']);
 
 
 
 
-
-$ufeild=' tarikh = "'.$tarikh.'",jawatan='.$jawatan.', ' ;
+$ufeild=' tarikh = "'.$tarikh.'",jawatan='.$jawatan.',namapegawai="'.$namapegawai.'", ' ;
 $i=0;
 $x=0;
  foreach($_POST['peranti'] as $s){
 $i++;
 //echo $x.'-'.$_GET['data'][$x].'- data-'.$s.'<br>';
-$ufeild.= '`v'.$i.'`='.$s.',`catatan'.$i.'`="'.$_POST['catatan'][$x].'",';
+$ufeild.= '`u'.$i.'`='.$_POST['perantiu'][$x].',`v'.$i.'`='.$s.',`catatan'.$i.'`="'.$_POST['catatan'][$x].'",';
 $x++;
  }
 

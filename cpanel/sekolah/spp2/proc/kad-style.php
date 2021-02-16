@@ -12,7 +12,7 @@
                         <a style="display: inline;" href="/ppdkluang/cpanel/sekolah/spp2/edit.php?id=<?=  $id; ?>&view=<?=  $urla; ?>&page=<?=  $page; ?>" class=" btn btn-block btn-sm btn-success"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 
             
-                        <a style="display: inline;" href="/ppdkluang/cpanel/sekolah/spp2/proc/isi.php?buang=<?=  $id; ?>&view=<?=  $urla; ?>&page=<?=  $page; ?>" class="buang btn btn-block btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a style="display: inline;" href="/ppdkluang/cpanel/sekolah/spp2/cetak.php?id=<?=  $id; ?>&view=<?=  $urla; ?>&page=<?=  $page; ?>" class=" btn btn-block btn-sm btn-info"><i class="fa fa-print" aria-hidden="true"></i></a>
 
 
                     </td>

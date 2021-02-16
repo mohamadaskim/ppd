@@ -11,29 +11,13 @@
     }
 
 
-
-if(isset($_GET['id'])){
-    $id = htmlspecialchars($_GET['id']);
-
-    $kuri = $PPD->prepare("SELECT s.* FROM `spp` s left join spp_jawatan j on j.kod=s.jawatan WHERE s.ID = ? and s.kodsekolah = ?  LIMIT 1");
-    $kuri->execute([$id,USER]);
- $d = $kuri->fetch(PDO::FETCH_ASSOC);
-
-    $view = $_GET['view'];
-$page = "?page=".$_GET['page'];
-
-}
-else
-{
-        $kuri = $PPD->prepare("SELECT s.namapegawai,s.jawatan FROM `spp` s left join spp_jawatan j on j.kod=s.jawatan WHERE s.kodsekolah = ? order by timestamp desc LIMIT 1");
+    $kuri = $PPD->prepare("SELECT * FROM `spp_isp` where kodsekolah = ? LIMIT 1");
     $kuri->execute([USER]);
  $d = $kuri->fetch(PDO::FETCH_ASSOC);
-}
-    $kuri = $PPD->query("SELECT * FROM `spp_bulan`");
-    $kenya = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
+$talian= $d['TALIAN'];
+$isp=$d['ISP'];
 
-    $kuri = $PPD->query("SELECT * FROM sts_jawatan ");
-    $keny = $kuri->fetchAll(PDO::FETCH_KEY_PAIR);
+
 
 
 
@@ -59,7 +43,7 @@ else
 
 <div class="main">
     <img src="/ppdkluang/cpanel/img/toptitle.png" alt="Top Title" class="w-100">
-    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">DAFTAR</h3>
+    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">Telco Confirmation</h3>
     <div class="row mt-3">
         <div class="col-12 col-md-3 order-last order-md-first mt-3 mt-md-0">
             <div class="sticky-filter">
@@ -72,7 +56,7 @@ else
 
 
 
-                <form class="card-body form-ada-proses" id="form" action="/ppdkluang/cpanel/sekolah/spp2/proc/isi.php" method="POST">
+                <form class="card-body form-ada-proses" id="form" action="/ppdkluang/cpanel/sekolah/spp2/proc/isi2.php" method="POST">
 <input type="hidden" name=page value="<?= $_GET['page'] ?>">
 <input type="hidden" name=view value="<?= $_GET['view'] ?>">
 
@@ -83,27 +67,35 @@ else
 
 
 
-
+<label for="hingga">Pengisian ini hanya sekali untuk kepastian maklumat peranti</label>
 
 
 
                     <div class="form-group form-row">
 
                         <div class="col-6">
-                            <label for="hingga">TARIKH</label>
-<input type="date" required class="form-control" name='tarikh' value="<?= $d['tarikh'] ?>">
+                            <label for="hingga">TELCO PERANTI</label>
+<select  required name="telco" id="kat" class="form-control">
+                        <option value=''>Sila Pilih</option>
+                            <?php
+$telco=['Celcom','Maxis','TM','Tiada'];
+                            foreach($telco  as $k=>$v){
+                                echo'<option value="'.$v.'" '.($isp==$v?'selected':'').'>'.$v.'</option>';
+                            }
+                            ?>
+                        </select>
                         </div>
 
 
 
                         <div class="col-6">
-                            <label for="hingga">JAWATAN</label>
-<select  required name="jawatan" id="kat" class="form-control">
+                            <label for="hingga">JUMLAH PERANTI</label>
+<select  required name="peranti" id="kat" class="form-control">
                         <option value=''>Sila Pilih</option>
                             <?php
-                            if($d['jawatan']=='') {$val=$s_pengesahj;} else {$val=$d['jawatan'];}
-                            foreach($keny  as $k=>$v){
-                                echo'<option value="'.$k.'" '.($val==$k?'selected':'').'>'.$v.'</option>';
+$telco=['1','2','3'];
+                            foreach($telco  as $k=>$v){
+                                echo'<option value="'.$v.'" '.($talian==$v?'selected':'').'>'.$v.'</option>';
                             }
                             ?>
                         </select>
@@ -118,8 +110,8 @@ else
                     <div class="form-group form-row">
 
                         <div class="col-12">
-                            <label for="hingga">NAMA PEGAWAI</label>
-<input type="text" required class="form-control" name='namapegawai' value="<?php if(isset($d['namapegawai'])) echo $d['namapegawai']; ?>">
+                            <label for="hingga">TARIKH PEMASANGAN PERANTI</label>
+<input type="date" required class="form-control" name='tarikh' value="<?= $d['tarikhpasang'] ?>">
                         </div>
 
 
@@ -131,40 +123,7 @@ else
 
 
                     </div>
-                    <div class="form-group  form-row">
-                       
-
-<?php
-
-  for($i=1;$i<=$_SESSION['talian'];$i++){
-    ?>
-                            <div class="col-3">
-                           <label for="hingga">PERANTI DOWNLOAD <?php echo $i; ?> (mb/s)</label>
- <input type="text" required placeholder="Contoh : 10.16" class="form-control"  name="peranti[]" value="<?php if(isset($d['v'.$i])) echo $d['v'.$i]; ?>">
-
-                        </div>
-                                                    <div class="col-3">
-                           <label for="hingga">PERANTI UPLOAD <?php echo $i; ?> (mb/s)</label>
- <input type="text"  required placeholder="Contoh : 10.16" class="form-control"  name="perantiu[]" value="<?php if(isset($d['u'.$i])) echo $d['u'.$i]; ?>">
-
-                        </div>
-                         <div class="col-6">
-
-                        <label for="tajuk">CATATAN</label>
-                        <textarea   name="catatan[]" rows="2" class="form-control"><?php if(isset($d['catatan'.$i])) echo $d['catatan'.$i]; ?></textarea>
-
-                        </div>
-    <?php
-} ?>
-
-<?php
-
-?>
-
-
-
-
-                    </div>
+                    
 
                     <div class="form-group">
 
@@ -175,13 +134,7 @@ else
    
                 
 
-                        <?php if(isset($id)){ ?> <button type="submit"  class="btn btn-success" name="kemaskini" value="<?php echo $id; ?>"><i class="fa fa-pencil" aria-hidden="true"></i> KEMASKINI</button> 
-                        <a  class="btn btn-danger" href="proc/isi.php?buang=<?php echo $id; ?>" >
-                    
-                                <i class="fa fa-pencil" ></i> PADAM
-            
-                        </a>
-                    <?php } else { ?>  <button type="submit"  class="btn btn-success" name="simpan"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN dan CETAK</button><?php } ?>
+<button type="submit"  class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> KEMASKINI</button>
 
 
 <script>

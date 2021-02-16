@@ -61,7 +61,7 @@ window.location.href='../index.php';
 
 <div class="main">
     <img src="/cpanel/img/toptitle.png" alt="Top Title" class="w-100">
-    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">i-CAKNA<br>(Kaunselor Daerah)</h3>
+    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">iCakna<br>(Kaunselor Pendidikan Daerah)</h3>
     <div class="row mt-3">
         <div class="col-12 col-md-3 order-last order-md-first mt-3 mt-md-0">
             <div class="sticky-filter">

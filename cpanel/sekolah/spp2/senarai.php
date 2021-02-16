@@ -96,7 +96,7 @@ $months = array (1=>'Januari',2=>'Februari',3=>'Mac',4=>'April',5=>'Mei',6=>'Jun
                     <th class="d-none d-md-table-cell">#</th>
                     <th>TARIKH LAPOR</th>
                     <th>BULAN</th>
-                    <th>PEGAWAI</th>
+                    <th>JAWATAN</th>
                     <th>MAKLUMAT</th>
                     <th style="width:5%">KEMASKINI</th>
                 </tr>

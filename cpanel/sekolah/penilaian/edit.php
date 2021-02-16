@@ -4,14 +4,19 @@
     include($_SERVER['DOCUMENT_ROOT']."/ppdkluang/cpanel/sekolah/header.php");
 
 
-   // $id = htmlspecialchars($_GET['id']);
+
 
 
 //include 'proc/query-normal.php';
 $kat=1;
 if(isset($_GET['kat'])) $kat=$_GET['kat'];
+
 $sql="SELECT * FROM `penilaian_perkara` where kategori=$kat";
-if(isset($_GET['id'])) $sql="SELECT * FROM `penilaian_perkara` p inner join `penilaian_data` d on d.perkara_id=p.ID WHERE kodsekolah=? and `data_id` ='$_GET[id]'";
+if(isset($_GET['id'])) {
+    $id = htmlspecialchars($_GET['id']);
+    $sql="SELECT * FROM `penilaian_perkara` p inner join `penilaian_data` d on d.perkara_id=p.ID inner join penilaian_bulan b on b.ID=d.data_id WHERE b.kodsekolah=? and d.`data_id` ='$id' and b.kategori= '$_GET[kat]'";
+
+}
 $kuri = $PPD->prepare($sql);
 $kuri->execute([USER]);
 $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
@@ -204,9 +209,13 @@ $dataid=$x;
 
 
                     <div class="text-center">
-                    <a href="/ppdkluang/cpanel/sekolah/ict/<?php echo $view.$page; ?>"  ><button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> KEMBALI</button></a>    
-
- <button  type="submit" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN & CETAK</button>
+                        <?php if(isset($id)){ ?> <button type="submit"  class="btn btn-success" name="kemaskini" value="<?php echo $id; ?>"><i class="fa fa-pencil" aria-hidden="true"></i> KEMASKINI</button> 
+                        <a  class="btn btn-danger" href="proc/isi.php?buang=<?php echo $id; ?>" >
+                    
+                                <i class="fa fa-pencil" ></i> PADAM
+            
+                        </a>
+                    <?php } else { ?>  <button type="submit"  class="btn btn-success" name="simpan"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN dan CETAK</button><?php } ?>
 
 </form>
 

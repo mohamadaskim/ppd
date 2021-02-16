@@ -43,13 +43,9 @@
         $tahun = '%%';
     }
 
-    if($view=='2'||$view=='telahbaca'){
-        include 'proc/query-normal.php';
-    } else if($view=='padam') {
-        include 'proc/query-padam.php';
-    } else {
-        include 'proc/query-search.php';
-    }
+$kuri = $PPD->prepare("SELECT * FROM icakna_senarai i left join `users_sekolah` s on s.kodsekolah=i.kodsekolah where s.kodsekolah !='' group by i.kodsekolah");
+$kuri->execute([]);
+$surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
     
 function kategori($id){
 if($id=='akp') $dat='AKP';
@@ -101,28 +97,56 @@ return $dat;
             <thead class="bg-warning text-light">
                 <tr>
                     <th class="d-none d-md-table-cell">#</th>
-                    <th>TARIKH LAPOR</th>
-                    <th>NAMA PEGAWAI</th>
-                    <th>KATEGORI</th>
-                     <th>KRITERIA</th>
-                    <th>TINDAKAN</th>
-                    <th style="width:5%">KEMASKINI</th>
+                    <th>KOD SEKOLAH</th>
+                    <th>NAMA SEKOLAH</th>
+                    <th>JUMLAH PENGISIAN</th>
+                     <th>MAKLUMAN</th>
+                    <th>SESI</th>
+                    <th style="width:5%">Papar</th>
                 </tr>
             </thead>
             <tbody>
 <?php
+
+function sihat($PPD,$kodsekolah,$data){
+    $sql="SELECT COUNT(*) as bil from icakna_senarai  where  kodsekolah=? and tindakan like '%$data'";
+        $kuri = $PPD->prepare($sql);
+$kuri->execute([$kodsekolah]);
+$kaun = $kuri->fetch()['bil']; 
+if($kaun!=0) return $kaun;
+}
+
          $x=$offset;
                 foreach($surat as $s){
 $x++;
-                    $id = htmlspecialchars($s['ID']);
-                    $kewpa = htmlspecialchars($s['nama']);
-                    $kategori = htmlspecialchars(kategori($s['kategori']));
-                    $tahunperolehan = htmlspecialchars(tindakan($s['tindakan']));
-                   $tarikh = date('d/m/Y',strtotime($s['timestamps']));
-                   $sahkan = htmlspecialchars($s['pegawai']);
+                    $id = htmlspecialchars($s['id']);
+                    $kodsekolah = htmlspecialchars($s['kodsekolah']);
+                    $namasekolah = htmlspecialchars($s['realname']);
+                    $pengisian = sihat($PPD,$kodsekolah,'');
+                   $maklum = sihat($PPD,$kodsekolah,0);
+                   $sesi = sihat($PPD,$kodsekolah,1);
                     $urla = htmlspecialchars (basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']));
 
-                    include 'proc/kad-style.php';
+                    ?>
+                <tr>
+                <td class="align-middle d-none d-md-table-cell"><?=  $x; ?></td>
+                <td class="align-middle my-lh-1 text-sm1"><?=  $kodsekolah; ?></td>
+                <td class=" align-middle"><span class="text-info font-weight-bold"><?=  $namasekolah; ?></span>
+                </td>
+                        <td class="align-middle"><?=  $pengisian; ?></td>
+                        <td class="align-middle"><?=  $maklum; ?></td>
+                        <td class="align-middle"><?=  $sesi; ?></td>
+                        <td  class="align-middle">
+
+                        
+
+                     
+                        <a style="display: inline;" href="/ppdkluang/cpanel/sekolah/icakna/senarai.php?kodsekolah=<?=  $kodsekolah; ?>&view=<?=  $urla; ?>&page=<?=  $page; ?>" class="btn btn-block btn-sm btn-info"><i class="fa fa-list" aria-hidden="true"></i></a>
+
+
+                    </td>
+                    </tr>    
+                    <?php
                     
                 } ?>
 
