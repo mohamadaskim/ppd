@@ -89,7 +89,7 @@ $tindakan = $_POST['tindakan'];
 $pengisi = $_POST['pengisi'];
 
 $page = "?page=".$_POST['page'];
-    $kuri = $PPD->prepare("INSERT INTO `icakna_senarai`(`kodsekolah`, `nama`, `kreteria`, `kategori`, `keterangan`, `isu`, `tindakan`, `pengisi`) VALUES (?,?,?,?,?,?,?,?)");
+    $kuri = $PPD->prepare("DELETE from icakna_senarai  WHERE id = ? AND kodsekolah = ?");
     if($kuri->execute([USER,$nama,$krateria,$kat,$keterangan,$isu,$tindakan,$pengisi])){
         ?>
 <script>alert("Tambah senarai berjaya");
