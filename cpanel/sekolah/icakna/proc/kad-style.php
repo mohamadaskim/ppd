@@ -17,10 +17,11 @@ if(isset($_GET['kodsekolah'])){ ?>
 
                      <?php  if($sahkan=='') { ?>
                         <a style="display: inline;" href="/ppdkluang/cpanel/sekolah/icakna/proc/isi.php?buang=<?=  $id; ?>&view=<?=  $urla; ?>&page=<?=  $page; ?>" class="buang btn btn-block btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+
 <?php }
 else{
 ?>
-                       <i class="fa fa-list" aria-hidden="true"></i>
+                                              <a style="display: inline;" href="/ppdkluang/cpanel/sekolah/icakna/ulasan.php?id=<?=  $id; ?>&view=<?=  $urla; ?>&page=<?=  $page; ?>" class="buang btn btn-block btn-sm btn-success"><i class="fa fa-list" aria-hidden="true"></i></a> 
 <?php
 
 }

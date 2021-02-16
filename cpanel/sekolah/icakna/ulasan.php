@@ -62,7 +62,7 @@ $page = "?page=".$_GET['page'];
 
                         <div class="col-6">
                             <label for="hingga">KRITERIA</label>
- <select  <?php if(isset($_GET['kodsekolah'])) echo " readonly=readonly "; ?>  name="krateria" id="kat" class="form-control">
+ <select  readonly=readonly  name="krateria" id="kat" class="form-control">
     <option value="" >Sila Pilih</option>
                             <?php
                             foreach($kenya as $k=>$v){
@@ -74,7 +74,7 @@ $page = "?page=".$_GET['page'];
 
                         <div class="col-6">
                             <label for="hingga">KATEGORI PEGAWAI</label>
- <select  <?php if(isset($_GET['kodsekolah'])) echo " readonly=readonly "; ?>  name="kat" id="kat" class="form-control">
+ <select  readonly=readonly  name="kat" id="kat" class="form-control">
 <option value="" >Sila Pilih</option>
 <option value="guru" <?php if($d['kategori']=='guru') echo " selected=selected  "; ?> >GURU</option>
 <option value="akp" <?php if($d['kategori']=='akp') echo "  selected=selected  "; ?> >AKP</option>
@@ -83,12 +83,12 @@ $page = "?page=".$_GET['page'];
 
                         <div class="col-12">
                             <label for="mula">No K/P</label>
-                            <input  <?php if(isset($_GET['kodsekolah'])) echo " readonly=readonly "; ?>  type="text" class="form-control" value="<?= $d['nama'] ?>" name="nokp">
+                            <input  readonly=readonly  type="text" class="form-control" value="<?= $d['nama'] ?>" name="nokp">
                         </div>
 
                         <div class="col-12">
                             <label for="mula">NAMA GURU/PEGAWAI</label>
-                            <input <?php if(isset($_GET['kodsekolah'])) echo " readonly=readonly "; ?>  type="text" class="form-control" value="<?= $d['nama'] ?>" name="nama">
+                            <input readonly=readonly  type="text" class="form-control" value="<?= $d['nama'] ?>" name="nama">
                         </div>
 
 
@@ -98,29 +98,30 @@ $page = "?page=".$_GET['page'];
 
                     <div class="form-group">
                         <label for="tajuk">KETERANGAN KESIHATAN</label>
-                        <textarea  <?php if(isset($_GET['kodsekolah'])) echo " readonly=readonly "; ?>  name="keterangan" rows="4" class="form-control"><?= $d['keterangan'] ?></textarea>
+                        <textarea  readonly=readonly  name="keterangan" rows="4" class="form-control"><?= $d['keterangan'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="lokasi">NYATAKAN ISU/MASALAH YANG MENYEBABKAN PRESTASI TERJEJAS</label>
-                       <textarea <?php if(isset($_GET['kodsekolah'])) echo " readonly=readonly "; ?> rows="4" name="isu" class="form-control"><?= $d['isu'] ?></textarea>
+                       <textarea readonly=readonly rows="4" name="isu" class="form-control"><?= $d['isu'] ?></textarea>
                     </div>
 
-<?php if(isset($_GET['kodsekolah'])){
-?>
+
               <div class="form-group">
                         <label for="lokasi">ULASAN KAUNSELOR</label>
-                       <textarea  rows="4" name="ulasankod" class="form-control"><?= $d['ulasankod'] ?></textarea>
+                       <textarea <?php if(empty($_GET['kodsekolah'])) echo " readonly=readonly "; ?> rows="4" name="ulasankod" class="form-control"><?= $d['ulasankod'] ?></textarea>
                     </div>
 
-<?php
-}
-   ?>   
 
                     <div class="text-center">
                        
-                
+     <?php if(isset($_GET['kodsekolah'])) { ?>          
  <button   class="btn btn-success" name="ulasan" value="<?php echo $id; ?>"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN ULASAN</button>
-
+<?php } else { 
+?>
+<a href="/ppdkluang/cpanel/sekolah/icakna/senarai.php"  ><button type="button" class="btn btn-back btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> KEMBALI</button></a> 
+<?php
+}
+?>
 
 <script>
     function submitForm() {

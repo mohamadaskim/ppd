@@ -119,7 +119,7 @@ $x++;
                     $kategori = htmlspecialchars(kategori($s['kategori']));
                     $tahunperolehan = htmlspecialchars(tindakan($s['tindakan']));
                    $tarikh = date('d/m/Y',strtotime($s['timestamps']));
-                   $sahkan = htmlspecialchars($s['pegawai']);
+                   $sahkan = htmlspecialchars($s['ulasandari']);
                     $urla = htmlspecialchars (basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']));
 
                     include 'proc/kad-style.php';
