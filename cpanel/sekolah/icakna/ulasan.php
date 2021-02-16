@@ -57,6 +57,7 @@ $page = "?page=".$_GET['page'];
                 <form class="card-body form-ada-proses" id="form" action="/ppdkluang/cpanel/sekolah/icakna/proc/isi.php" method="POST">
 <input type="hidden" name=page value="<?= $_GET['page'] ?>">
 <input type="hidden" name=view value="<?= $_GET['view'] ?>">
+<input type="hidden" name=kodsekolah value="<?= $_GET['kodsekolah'] ?>">
                     <div class="form-group form-row">
 
                         <div class="col-6">
@@ -108,7 +109,7 @@ $page = "?page=".$_GET['page'];
 ?>
               <div class="form-group">
                         <label for="lokasi">ULASAN KAUNSELOR</label>
-                       <textarea  rows="4" name="isu" class="form-control"><?= $d['ulasankod'] ?></textarea>
+                       <textarea  rows="4" name="ulasankod" class="form-control"><?= $d['ulasankod'] ?></textarea>
                     </div>
 
 <?php
@@ -118,7 +119,7 @@ $page = "?page=".$_GET['page'];
                     <div class="text-center">
                        
                 
- <button   class="btn btn-success" name="ulasan"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN ULASAN</button>
+ <button   class="btn btn-success" name="ulasan" value="<?php echo $id; ?>"><i class="fa fa-pencil" aria-hidden="true"></i> SIMPAN ULASAN</button>
 
 
 <script>

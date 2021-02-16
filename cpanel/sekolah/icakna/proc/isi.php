@@ -79,21 +79,16 @@ window.location.href='../senarai.php';
 
 if(isset($_POST['ulasan'])){
 
-    $id = $_POST['id'];
-$krateria = $_POST['krateria'];
-$kat = $_POST['kat'];
-$nama = $_POST['nama'];
-$keterangan = $_POST['keterangan'];
-$isu = $_POST['isu'];
-$tindakan = $_POST['tindakan'];
-$pengisi = $_POST['pengisi'];
+    $id = $_POST['ulasan'];
+$ulasan = $_POST['ulasankod'];
+$kodsekolah=$_POST['kodsekolah'];
 
 $page = "?page=".$_POST['page'];
-    $kuri = $PPD->prepare("DELETE from icakna_senarai  WHERE id = ? AND kodsekolah = ?");
-    if($kuri->execute([USER,$nama,$krateria,$kat,$keterangan,$isu,$tindakan,$pengisi])){
+    $kuri = $PPD->prepare("UPDATE `icakna_senarai` SET `ulasankod` = ?,ulasandari=? WHERE kodsekolah=? and `ID` = ?");
+    if($kuri->execute([$ulasan,USER,$kodsekolah,$id])){
         ?>
-<script>alert("Tambah senarai berjaya");
-window.location.href='../senarai.php';
+<script>alert("Ulasan Disimpan");
+window.location.href='../sekolah.php';
 </script>
 
 <?php
