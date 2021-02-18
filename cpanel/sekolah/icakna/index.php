@@ -61,7 +61,7 @@ window.location.href='../index.php';
 
 <div class="main">
     <img src="/cpanel/img/toptitle.png" alt="Top Title" class="w-100">
-    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">iCakna<br>(Kaunselor Pendidikan Daerah)</h3>
+    <h3 class="card mt-4 font-weight-bold p-2 text-center bg-dark text-light">iCakna<br>(Aplikasi Rujukan Kesihatan Klien)</h3>
     <div class="row mt-3">
         <div class="col-12 col-md-3 order-last order-md-first mt-3 mt-md-0">
             <div class="sticky-filter">
@@ -70,8 +70,10 @@ window.location.href='../index.php';
         </div>
         <div class="col col-md order-first order-md-last">
    <center>         
-<h3 class="card mt-4 font-weight-bold p-2 text-center bg-info text-light ">MEMPUNYAI PEGAWAI UNTUK DI RUJUK KE KAUNSELOR?</h3>
-
+<h5 class="card mt-4 font-weight-bold p-2 text-center bg-info text-light ">Sistem iCakna</h5>Sistem iCakna dibangunkan untuk mengumpul maklumat guru/staf daerah Kluang yang mempunyai masalah kesihatan.  Masalah kesihatan yang dirujuk adalah masalah kesihatan yang kritikal, menyebabkan cuti sakit berpanjangan dan mengganggu prestasi kerja.
+<br><br>
+Adakah sekolah tuan/puan mempunyai warga yang bermasalah kesihatan seperti di atas?
+<br><br>
  <button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i>ADA</button><?php if($xbaca==0){ ?><button  id="submit-button" class="btn btn-danger" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i>TIADA</button><?php } ?>
 
 </center>

@@ -6,14 +6,14 @@ $sect = $kuri->fetchAll(PDO::FETCH_COLUMN);
 <div class="card shadow-sm">
     <div class="list-group list-group-flush inbox-menu">
         <a href="index.php" class="list-group-item list-group-item-action <?= ($view=='1'?'active-oren':'') ?>">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
+            <i class="fa fa-th" aria-hidden="true"></i>
             <span>DASHBOARD </span>
         </a>
         <a href="senarai.php" class="list-group-item list-group-item-action <?= ($view=='2'?'active-oren':'') ?>">
-            <i class="fa fa-envelope-open" aria-hidden="true"></i> SENARAI DIDAFTAR
+            <i class="fa fa-list" aria-hidden="true"></i> SENARAI DIDAFTAR
         </a>
         <a href="edit.php" class="list-group-item list-group-item-action <?= ($view=='3'?'active-oren':'') ?>">
-            <i class="fa fa-ban" aria-hidden="true"></i> DAFTAR
+            <i class="fa fa-plus-circle" aria-hidden="true"></i> DAFTAR
         </a>
         
     </div>
