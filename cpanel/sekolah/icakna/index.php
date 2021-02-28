@@ -9,7 +9,13 @@ $_SESSION['redir']=$_SERVER['REQUEST_URI'];
 
    $view = '1';
 
+if(isset($_POST['kemaskini'])){
 
+    $status=$_POST['user_id'];
+$pengisi=$_POST['pengisi'];
+ $kuri = $PPD->prepare("INSERT INTO `icakna_status`( `kodsekolah`, `status`, `daripada`) VALUES (?, ?, ?) on duplicate key update status=values(status),daripada=values(daripada)");
+$kuri->execute([USER,$status,$pengisi]);   
+}
 
     
 $kuri = $PPD->prepare("SELECT * FROM `sts_dapat` where kodsekolah=? ");
@@ -17,9 +23,9 @@ $kuri->execute([USER]);
 $surat = $kuri->fetchAll(PDO::FETCH_ASSOC);
 
 
-    $kuri = $PPD->prepare("SELECT COUNT(*) AS bil FROM icakna_senarai s  WHERE s.kodsekolah = ? ");
+    $kuri = $PPD->prepare("SELECT status  FROM icakna_status s  WHERE s.kodsekolah = ? ");
     $kuri->execute([USER]);
-    $xbaca = $kuri->fetch(PDO::FETCH_ASSOC)['bil'];
+    $status = $kuri->fetch(PDO::FETCH_ASSOC)['status'];
     if(isset($_SESSION['KOD'])&&$_SESSION['KOD']==1){
 
     }
@@ -74,7 +80,10 @@ window.location.href='../index.php';
 <br><br>
 Adakah sekolah tuan/puan mempunyai warga yang bermasalah kesihatan seperti di atas?
 <br><br>
- <button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i>ADA</button><?php if($xbaca==0){ ?><button  id="submit-button" class="btn btn-danger" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i>TIADA</button><?php } ?>
+
+<br>
+    <?php if($status==1 || $status==''){ ?> <a data-toggle="modal" data-userid="1" data-target="#modalRegisterForm"><button  id="submit-button" class="btn btn-success" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i>ADA</button></a><?php } ?>
+    <?php if($status==0 || $status==''){ ?><a data-toggle="modal" data-userid="0" data-target="#modalRegisterForm"><button  id="submit-button" class="btn btn-danger" name="kemaskini"><i class="fa fa-pencil" aria-hidden="true"></i>TIADA</button></a><?php } ?>
 
 </center>
  
@@ -83,6 +92,48 @@ Adakah sekolah tuan/puan mempunyai warga yang bermasalah kesihatan seperti di at
     </div>
 </div>
 <input type="hidden" id="status" value="<?= $_GET['status']??'no' ?>">
+
+<form method="post">
+
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">PENGESAHAH STATUS</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+
+<input type="hidden" name="user_id" value="3">
+
+
+        <div class="md-form mb-5">
+
+                            <label for="hingga">JAWATAN PENGESAH</label>
+ <select  name="pengisi" id="kat" class="form-control">
+<option value="" >Sila Pilih</option>
+<option value="GB" >GURU BESAR</option>
+<option value="GPK" >GURU PENOLONG KANAN</option>
+                        </select>
+        </div>
+
+      </div>
+
+
+
+
+      <div class="modal-footer d-flex justify-content-center">
+
+        <button type="submit" name='kemaskini' class="btn btn-success">SAHKAN</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
 
 <!-- START FOOTER -->
 </div>
@@ -94,26 +145,10 @@ Adakah sekolah tuan/puan mempunyai warga yang bermasalah kesihatan seperti di at
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
     <script src="cpanel/js/global.js"></script>
     <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        })
-        $('body').tooltip({selector: '[data-toggle="tooltip"]'});
-        
-        let stat = $('#status').val();
-        if(stat!='no'){
-            if(stat=='unread'){alert('Surat telah ditetapkan kepada status belum baca. Bil baca dan bil muat turun telah ditetapkan semula kepada 0.');}
-            window.location.replace("cpanel/sekolah/inbox/");
-        }
-        $('#btn-cari').click(function(e){
-            let a = $('#keyword').val();
-            let b = $('#pegawai').val();
-            let c = $('#tapis-tahun').val();
-            let d = $('#sektor').val();
-            if(a==''&&b==''&&c=='all'&&d=='all'){
-                alert('Sila isi sekurang-kurangnya carian kata kunci atau pegawai, atau buat pilihan sektor atau tahun.');
-                e.preventDefault();
-            }
-        })
+$('#modalRegisterForm').on('show.bs.modal', function(e) {
+    var userid = $(e.relatedTarget).data('userid');
+    $(e.currentTarget).find('input[name="user_id"]').val(userid);
+});
     </script>
 
 
