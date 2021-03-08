@@ -1,0 +1,38 @@
+[02-Jun-2020 09:33:47 Asia/Kuala_Lumpur] PHP Warning:  mime_content_type(/home/u418527094/domains/ppdkluang.edu.my/public_html/lampiran/201901231001014444_SPI ICT KPM BIL 1-2018.pdf): failed to open stream: No such file or directory in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/preview.php on line 220
+[02-Jun-2020 09:35:15 Asia/Kuala_Lumpur] PHP Warning:  mime_content_type(/home/u418527094/domains/ppdkluang.edu.my/public_html/lampiran/201901231001014444_SPI ICT KPM BIL 1-2018.pdf): failed to open stream: No such file or directory in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/preview.php on line 220
+[16-Jun-2020 15:35:50 Asia/Kuala_Lumpur] PHP Warning:  mime_content_type(/home/u418527094/domains/ppdkluang.edu.my/public_html/lampiran/201901231001014444_SPI ICT KPM BIL 1-2018.pdf): failed to open stream: No such file or directory in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/preview.php on line 220
+[01-Jul-2020 14:29:39 Asia/Kuala_Lumpur] PHP Warning:  mime_content_type(/home/u418527094/domains/ppdkluang.edu.my/public_html/lampiran/201901231001014444_SPI ICT KPM BIL 1-2018.pdf): failed to open stream: No such file or directory in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/preview.php on line 220
+[01-Jul-2020 14:30:11 Asia/Kuala_Lumpur] PHP Warning:  mime_content_type(/home/u418527094/domains/ppdkluang.edu.my/public_html/lampiran/201901231001014444_SPI ICT KPM BIL 1-2018.pdf): failed to open stream: No such file or directory in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/preview.php on line 220
+[19-Aug-2020 16:51:39 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/u418527094/domains/ppdkluang.edu.my/public_html/auth/auth.php:30
+Stack trace:
+#0 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php(2): require()
+#1 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/header.php(2): require('/home/u41852709...')
+#2 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/index.php(3): include('/home/u41852709...')
+#3 {main}
+  thrown in /home/u418527094/domains/ppdkluang.edu.my/public_html/auth/auth.php on line 30
+[16-Oct-2020 01:37:08 Asia/Kuala_Lumpur] PHP Warning:  mime_content_type(/home/u418527094/domains/ppdkluang.edu.my/public_html/lampiran/201901231001014444_SPI ICT KPM BIL 1-2018.pdf): failed to open stream: No such file or directory in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/preview.php on line 220
+[19-Oct-2020 15:49:18 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/u418527094/domains/ppdkluang.edu.my/public_html/auth/auth.php:30
+Stack trace:
+#0 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php(2): require()
+#1 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/header.php(2): require('/home/u41852709...')
+#2 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/preview.php(3): include('/home/u41852709...')
+#3 {main}
+  thrown in /home/u418527094/domains/ppdkluang.edu.my/public_html/auth/auth.php on line 30
+[19-Oct-2020 15:49:40 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php:7
+Stack trace:
+#0 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/header.php(2): require()
+#1 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/preview.php(3): include('/home/u41852709...')
+#2 {main}
+  thrown in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php on line 7
+[19-Oct-2020 15:49:44 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php:7
+Stack trace:
+#0 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/header.php(2): require()
+#1 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/index.php(3): include('/home/u41852709...')
+#2 {main}
+  thrown in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php on line 7
+[19-Oct-2020 15:50:01 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php:7
+Stack trace:
+#0 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/header.php(2): require()
+#1 /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/sekolah/inbox/index.php(3): include('/home/u41852709...')
+#2 {main}
+  thrown in /home/u418527094/domains/ppdkluang.edu.my/public_html/cpanel/proc/auth.php on line 7
