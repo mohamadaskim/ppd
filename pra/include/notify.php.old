@@ -1,0 +1,206 @@
+<?php 
+session_start(); 
+include 'db.php'; 
+@$kodsekolah=$_SESSION['SESS_KODSEKOLAH']; 
+@$username=$_SESSION['SESS_USERNAME']; 
+@$userlevel=$_SESSION['SESS_USERLEVEL']; 
+@$realname=$_SESSION['SESS_REALNAME']; 
+
+function time_elapsed_string($datetime, $full = false) {
+    $now = new DateTime($datetime);
+    $ago = new DateTime;
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' left' : 'just now';
+}
+
+
+ ?>
+
+      <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+      <!--logo start-->
+      <a href="index.php" class="logo"><b>E<span>rekod</span></b></a>
+      <!--logo end-->
+      <div class="nav notify-row" id="top_menu">
+        <!--  notification start -->
+        <ul class="nav top-menu">
+          <!-- settings start -->
+ 
+          <!-- settings end -->
+<?php 
+function fill_log($conn,$username)
+{ 
+  $kodsekolah=$_SESSION['SESS_KODSEKOLAH'];
+ $sql="SELECT *,SUBSTR(perkara, 1, 40) as perkara2 FROM `data_log` where username='$username' and `tarikh` = CURDATE()";
+
+
+$result = mysqli_query($conn,$sql);
+$count = mysqli_num_rows($result);
+if($count!=0)return $count;
+
+}
+
+       
+    
+        ?>		  
+		         <!-- inbox dropdown start-->
+          <li id="header_inbox_bar" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="index.php#">
+              <i class="fa fa-tasks"></i>
+              <span class="badge bg-theme"><?php echo fill_log($conn,$username); ?></span>
+              </a>
+            <ul class="dropdown-menu extended inbox">
+              <div class="notify-arrow notify-arrow-green"></div>
+              <li>
+                <p class="green">Aktiviti Terkini Harini</p>
+              </li>
+<?php 
+
+        $sql = "SELECT *,SUBSTR(perkara, 1, 40) as perkara2 FROM `data_log` where username='$username' and `tarikh` = CURDATE() order by id desc limit 6";
+        $result = mysqli_query($conn,$sql);
+        WHILE($rows=mysqli_fetch_array($result)) {
+ ?> 
+			  
+              <li>
+                <a href="index.php#">
+                  <span class="photo"></span>
+                  <span class="subject">
+                  <span class="from"><?php echo $rows['kategori']; ?></span>
+                  <span class="time"><?php echo $rows['waktu_mula']; ?></span>
+                  </span>
+                  <span class="message">
+                  <?php echo $rows['perkara2']; ?>
+                  </span>
+                  </a>
+              </li>
+		<?php } ?>
+			  
+                            <li class="external">
+                <a href="#">Papar Semua Aktiviti Harini</a>
+              </li>
+            </ul>
+          </li>
+          <!-- inbox dropdown end -->  
+		  
+		  
+          <!-- inbox dropdown start-->
+          <li id="header_inbox_bar" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="index.php#">
+              <i class="fa fa-envelope-o"></i>
+              <span class="badge bg-theme"><!--1--></span>
+              </a>
+            <ul class="dropdown-menu extended inbox">
+              <div class="notify-arrow notify-arrow-green"></div>
+              <li>
+                <p class="green"><!--1 Message--></p>
+              </li>
+              <!--<li>
+                <a href="index.php#">
+                  <span class="photo"><img alt="avatar" src="https://www.pngkey.com/png/full/114-1149847_avatar-unknown-dp.png"></span>
+                  <span class="subject">
+                  <span class="from">Pengirim</span>
+                  <span class="time">1/1/2020</span>
+                  </span>
+                  <span class="message">
+                  Sila Kemaskini PRS
+                  </span>
+                  </a>
+              </li>-->
+              
+              <li>
+                <a href="">No New Message</a>
+              </li>
+            </ul>
+          </li>
+          <!-- inbox dropdown end -->
+          <!-- notification dropdown start-->
+          <li id="header_notification_bar" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="index.php#">
+              <i class="fa fa-bell-o"></i>
+              <span class="badge bg-warning">1</span>
+              </a>
+            <ul class="dropdown-menu extended notification">
+              <div class="notify-arrow notify-arrow-yellow"></div>
+              <li>
+                <p class="yellow">Notifikasi Terkini</p>
+              </li>
+              <li>
+                <a href="">
+                  <span class="label label-warning"><i class="fa fa-bell"></i></span>
+                  Kemaskini Profile Peribadi
+                  <span class="small italic"><?php echo time_elapsed_string('2030-05-01 00:22:35'); ?></span>
+                  </a>
+              </li>
+              <!--<li>
+                <a href="index.php#">
+                  <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                  Kendiri
+                  <span class="small italic">30 days left</span>
+                  </a>
+              </li>
+
+              <li>
+                <a href="index.php#">
+                  <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                  DWEN
+                  <span class="small italic">30 days left</span>
+                  </a>
+              </li>
+              <li>
+                <a href="index.php#">
+                  <span class="label label-success"><i class="fa fa-plus"></i></span>
+                  PRS
+                  <span class="small italic">30 days left</span>
+                  </a>
+              </li>
+			  <li>
+                <a href="index.php#">
+                  <span class="label label-success"><i class="fa fa-plus"></i></span>
+                  MENTOR/MENTEE
+                  <span class="small italic">30 days left</span>
+                  </a>
+              </li>
+			                <li>
+                <a href="index.php#">
+                  <span class="label label-success"><i class="fa fa-plus"></i></span>
+                  MINDA SIHAT
+                  <span class="small italic">30 days left</span>
+                  </a>
+              </li>-->
+              <li>
+                <a href="index.php#">See all notifications</a>
+              </li>
+            </ul>
+          </li>
+          <!-- notification dropdown end -->
+        </ul>
+        <!--  notification end -->
+      </div>
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="/erekodv2/logout.php">Logout</a></li>
+        </ul>
+      </div>

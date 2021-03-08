@@ -1,0 +1,97 @@
+<?php
+session_start();
+   include 'dbori.php';
+   
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+      $myusername = mysqli_real_escape_string($conn,$_POST['login']);
+      $mypassword = mysqli_real_escape_string($conn,$_POST['password']);
+      if($myusername!=""&&$mypassword!="") {
+        $sql = "SELECT * FROM mgkkjoho_var.users WHERE username = '$myusername' and password = md5('$mypassword') and auth=0";
+        $result = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $userlevel = $row['userlevel'];
+        $userlevel2 = $row['userlevel2'];
+        $realname = $row['realname'];
+$negeri=$row['kodnegeri'];
+        $count = mysqli_num_rows($result);
+
+if($count==0){
+
+        $sql = "SELECT *, KodSekolah as kodsekolah, Namasekolah as q_nama, 5 as userlevel from mgkkjoho_var.tssekolah WHERE KodSekolah = '$myusername' AND KodSekolah = '$mypassword'";
+        $result = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $userlevell = 5;
+        $realname = $row['q_nama'];
+        
+$userlevel = $row['userlevel'];
+        $count = mysqli_num_rows($result);
+}
+
+
+
+
+      } else { $count = 0; }
+
+
+
+
+
+
+      if($count == 1) {
+         session_regenerate_id();
+         $_SESSION['SESS_USERNAME'] = $myusername;
+         $_SESSION['SESS_USERLEVEL'] = $userlevel;
+         $_SESSION['SESS_REALNAME'] = $realname;
+         $_SESSION['SESS_NEGERI']=intval($row['kodnegeri']);
+         
+         $logtime = time();
+         $ip=$_SERVER['REMOTE_ADDR'];
+         mysqli_query($conn,"UPDATE mgkkjoho_var.users SET timestamp = '$logtime',lastlogin = now(), lastip = '$ip' WHERE username = '$myusername'");
+        
+         if($userlevel==10) { $_SESSION['SESS_KODSEKOLAH'] = $row['kodsekolah']; session_write_close(); header("location: /e/"); }
+         if($userlevel==30) { $_SESSION['SESS_KODSEKOLAH'] = $row['kodsekolah'];  session_write_close(); header("location: /e/"); }
+         if($userlevel==50) { $_SESSION['SESS_KODPPD'] = $row['kodppd'];  session_write_close(); 
+         header("location: /erekodv2/admin_ppd.php"); }
+         if($userlevel==80) { $_SESSION['SESS_KODNEGERI'] = $row['kodnegeri'];  session_write_close(); header("location: /erekodv2/admin_jpn.php"); }
+         if($userlevel==90) { session_write_close(); header("location: /erekodv2/admin_kpm.php"); }
+         if($userlevel==99) { session_write_close(); header("location: superadmin.php"); }
+         if(isset($userlevell) && $userlevell==5) { 
+         $_SESSION['SESS_USERNAME'] = $myusername;
+         $_SESSION['SESS_USERLEVEL'] = '30';
+         $_SESSION['SESS_KODSEKOLAH'] = $myusername;
+         $_SESSION['SESS_REALNAME'] = $realname;
+         $_SESSION['SESS_NEGERI']=1;
+          session_write_close(); 
+          header("location: /e/");
+         }
+      }else {
+         session_regenerate_id();
+         $error = "<font color=\"#ff000\">* Ralat : Kombinasi ID Pengguna dan Kata Laluan salah</font>";
+		 $_SESSION['ERRMSG_ARR'] = $error;
+         session_write_close();
+         
+         $sql = "SELECT * FROM mgkkjoho_var.users WHERE username = '$myusername' and password = md5('$mypassword') and auth=1";
+        $result = mysqli_query($conn,$sql);
+        if(mysqli_num_rows($result)==1){
+            ?>
+            <script>
+                alert("akaun perlu pengesahan daerah, sila rujuk ju daerah");
+            </script>
+            <?php
+            
+        }
+                    ?>
+            <script>
+                           window.location.href='index.php';
+            </script>
+            <?php
+        
+
+         //header("location: index.php");
+      }
+   }
+
+
+
+?>

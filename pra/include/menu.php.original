@@ -1,0 +1,139 @@
+<?php 
+
+$filename= basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
+$result1 = mysqli_query($conn,"SELECT g.* from mgkkjoho_kaunseling.gbk g where g.nokp='$username'");
+$filesession=mysqli_fetch_array($result1);
+
+?>
+<div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu" id="nav-accordion">
+          <p class="centered"><a href="profile.php">
+
+<?php if($filesession['img']!=''){ ?><img src="/e/images/profile/thumbs/<?php echo $filesession['img'].'?='.Date('U'); ?>" class="img-circle" width="80" height="80"> <?php } else { ?><img src="/e/images/profile/unknown.png" class="img-circle" width="80"><?php } ?>
+
+
+            </a></p>
+          <h5 class="centered"><?php echo $realname; ?></h5>
+          <li class="mt">
+            <a  href="index.php">
+              <i class="fa fa-dashboard"></i>
+              <span>Dashboard</span>
+              </a>
+          </li>
+          <li class="sub-menu">
+            <a <?php if($filename=="lain.php" ||$filename=="pentadbiran.php" || $filename=="kaunseling.php") { echo ' class="active" '; } ?> href="javascript:;">
+              <i class="fa fa-desktop"></i>
+              <span>Lapor Aktiviti</span>
+              </a>
+            <ul class="sub">
+			<li ><a href="menu.php">Menu Aktiviti</a></li>
+              <li <?php if($filename=="pentadbiran.php") { echo ' class="active" '; } ?>><a href="pentadbiran.php">Aktiviti Pentadbiran</a></li>
+			  <li <?php if($filename=="kaunseling.php") { echo ' class="active" '; } ?>><a href="kaunseling.php">Aktiviti Kaunseling</a></li>
+                <li <?php if($filename=="lain.php") { echo ' class="active" '; } ?>><a href="lain.php">Program Luar/Lain-Lain</a></li>
+            </ul>
+          </li>
+
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-book"></i>
+              <span>Senarai Aktiviti</span>
+              </a>
+            <ul class="sub">
+              <li><a href="senarai_aktiviti.php">Senarai Aktiviti</a></li>
+			  <li><a href="klien.php">Senarai Klien</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-tasks"></i>
+              <span>Laporan</span>
+              </a>
+            <ul class="sub">
+        <li><a href="laporan.php">Cetak Laporan</a></li>
+
+			  <li><a href="javascript:window.open('rumusan.php','Cetak','width=840,height=720')">Rumusan</a></li>
+
+            </ul>
+          </li>
+
+
+          <li class="sub-menu">
+            <a href="javascript:;">
+              <i class=" fa fa-bar-chart-o"></i>
+              <span>Analisis / Impak</span>
+              </a>
+            <ul class="sub">
+              <li><a href="javascript:window.open('i_impak_sekolah.php','Cetak','width=840,height=600')">Impak Bimbingan Kaunseling</a></li>
+              <li><a href="javascript:window.open('analisis_gbk.php','Cetak','width=940,height=600')">Analisis GBK</a></li>
+              <li><a href="analisis_murid.php">Analisis Murid</a></li>
+            </ul>
+          </li>
+
+
+		  
+		  		            <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-group"></i>
+              <span>Lain Lain</span>
+              </a>
+            <ul class="sub">
+              <li><a href="data_inventori.php">Data Psikometrik</a></li>
+              <li><a href="murid_cicir.php">Data Murid Cicir</a></li>
+             <!-- <li><a href="javascript:window.open('../erekodv2/j_p_2.php','Cetak','width=1024,height=600')">Minda sihat</a></li> -->
+              <li class="sub-menu">
+            <a href="javascript:;">
+              
+              <span>Minda Sihat</span>
+              </a>
+            <ul class="sub">
+                
+               <!-- <li style="pointer-events:none;"><a href="javascript:window.open('../e/j_p.php?p','Cetak','width=1024,height=600')">Minda sihat Saringan 1</a></li>
+                <li style="pointer-events:none;"><a href="javascript:window.open('../e/j_q.php?q','Cetak','width=1024,height=600')">Minda sihat Saringan 2</a></li>
+                <li style="pointer-events:none;"><a href="javascript:window.open('../e/j_q.php?q3','Cetak','width=1024,height=600')">Minda sihat Saringan 3</a></li>-->
+            <li ><a href="javascript:window.open('../e/minda_sihat_semak.php','Cetak','width=1024,height=600')">Senarai Semak</a></li>
+              
+              <li><a href="javascript:window.open('../e/minda_sihat2.php?id=WHOOLEY','Cetak','width=1024,height=600')">WHOOLEY</a></li>
+               <li class="sub-menu">
+            <a href="javascript:;">
+              
+              <span>Saringan Minda Sihat 1</span>
+              </a>
+            <ul class="sub">
+              <li><a href="javascript:window.open('../e/minda_sihat2.php?id=PHQ9','Cetak','width=1024,height=600')">PHQ9 1</a></li>
+              <li><a href="javascript:window.open('../e/minda_sihat2.php?id=GAD7','Cetak','width=1024,height=600')">GAD7 1</a></li>
+              
+            </ul>
+          </li>
+               <li class="sub-menu">
+            <a href="javascript:;">
+              
+              <span>Saringan Minda Sihat 2</span>
+              </a>
+            <ul class="sub">
+              <li><a href="javascript:window.open('../e/minda_sihat2.php?id=PHQ9_2','Cetak','width=1024,height=600')">PHQ9 2</a></li>
+              <li><a href="javascript:window.open('../e/minda_sihat2.php?id=GAD7_2','Cetak','width=1024,height=600')">GAD7 2</a></li>
+               
+            </ul>
+          </li>
+              
+             
+            </ul>
+          </li>
+              <li><a href="pkp_list.php">Program PKP</a></li>
+            </ul>
+          </li>
+		            <li class="sub-menu">
+            <a href="javascript:;">
+              <i class="fa fa-cogs"></i>
+              <span>Data Murid/GBK</span>
+              </a>
+            <ul class="sub">
+              <li><a href="data_murid.php">Data Murid</a></li>
+              <li><a href="profile.php">Profile</a></li>
+			  <li><a href="u_list.php">Tukar Kata Laluan</a></li>
+            </ul>
+          </li>
+        </ul>
+        <!-- sidebar menu end-->
+      </div>
